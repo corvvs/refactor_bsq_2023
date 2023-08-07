@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:06:02 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:33:51 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef	struct	s_tempcrs
 	int	row;
 	int	size;
 }				t_tempcrs;
+
+// read.c
+char*	read_content(int fd);
 
 int				g_max;
 int				g_col;
