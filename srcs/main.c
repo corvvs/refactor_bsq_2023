@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:55:08 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:58:08 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		validate_header_line(char **map) {
 	return (SUCCESS);
 }
 
-static int	search_bsq_from_content(char* content) {
+static int	search_out_bsq(char* content) {
 	char**	lines = bsq_split(content, '\n');
 	if (lines == NULL) {
 		return (FAIL);
@@ -63,12 +63,12 @@ static int	search_bsq_from_content(char* content) {
 		free(lines);
 		return (FAIL);
 	}
-	print_bsq(lines, &map);
+	run_bsq(&map);
 	free(map.lines);
 	return (SUCCESS);
 }
 
-static void	search_out_bsq(int fd) {
+static void	run_bsq_session(int fd) {
 	if (fd < 0) {
 		// fd is invalid
 		ft_puterror(FT_ERR_MAP);
@@ -79,7 +79,7 @@ static void	search_out_bsq(int fd) {
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}
-	if (search_bsq_from_content(content) == FAIL) {
+	if (search_out_bsq(content) == FAIL) {
 		ft_puterror(FT_ERR_MAP);
 	}
 	free(content);
@@ -88,7 +88,7 @@ static void	search_out_bsq(int fd) {
 int		main(int argc, char *argv[]) {
 	if (argc < 2) {
 		// [from stdin]
-		search_out_bsq(STDIN_FILENO);
+		run_bsq_session(STDIN_FILENO);
 		return (0);
 	}
 	// [using arguments]
@@ -97,7 +97,7 @@ int		main(int argc, char *argv[]) {
 			printf("\n");
 		}
 		int ifd = open(argv[i], O_RDONLY);
-		search_out_bsq(ifd);
+		run_bsq_session(ifd);
 		if (ifd < 0) {
 			close(ifd);
 		}

@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:55:14 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:57:42 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int				ft_atoi(char *str);
 t_info			parse_header_line(char **map);
 void			init_cursor(t_tempcrs *p_tempcrs);
 int				cell_is_open(char **map, int col, int row, t_info *p_info);
-void			print_bsq(char **map, t_info *p_info);
+void			run_bsq(t_info *p_info);
 void			set_bsq(t_bsq *p_bsq);
 int				get_map_width(char **map);
 
