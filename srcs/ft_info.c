@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:26:31 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_map	parse_header_line(char **lines)
 		.header_line	= header_line,
 		.field_lines	= lines + 1,
 		.num_rows		= num_rows,
+		.num_cols		= ft_strlen(lines[1]),
 		.empty			= header_line[len - 3],
 		.obstacle		= header_line[len - 2],
 		.full			= header_line[len - 1],

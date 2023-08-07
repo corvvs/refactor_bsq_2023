@@ -6,22 +6,23 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:26:10 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 // 先頭行について単体で完結するバリデーションを行う
-static int		validate_header_line(char **map) {
+static int		validate_lines(char **lines) {
 	int		len;
 	char	*line;
 	int		i;
 
-	if (!map[0])
+	// 少なくとも2行あることを確認する
+	if (lines[0] == NULL || lines[1] == NULL)
 		return (FAIL);
 	// 先頭行が4文字以上あることを確認する
-	line = map[0];
+	line = lines[0];
 	len = ft_strlen(line);
 	if (len < 4)
 		return (FAIL);
@@ -54,7 +55,7 @@ static int	search_out_bsq(char* content) {
 	// }
 	// printf("--\n");
 
-	if (validate_header_line(lines) == FAIL) {
+	if (validate_lines(lines) == FAIL) {
 		free(lines);
 		return (FAIL);
 	}

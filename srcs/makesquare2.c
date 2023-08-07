@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:17:54 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:31:03 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,16 @@ static int		square_is_extendible(const t_square* square, const t_map *p_info) {
 
 // カーソル位置で定義される正方形を可能な限り拡大する
 static t_square get_maximum_square(size_t top, size_t left, const t_map *p_info) {
-	t_square	square = { .top = top, .left = left, .size = 0 };
+	t_square	square = { .top = top, .left = left };
 	for (square.size = 0; square_is_extendible(&square, p_info); square.size += 1);
 	return (square);
 }
 
 static t_square	find_bsq(t_map *map) {
 	t_square	bsq = { .size = 0 };
-	const size_t	map_width = get_map_width(map->field_lines);
 	// すべてのセルについて, そのセルを左上隅とする正方形の最大サイズを調べる
 	for (size_t top = 0; top < map->num_rows; top += 1) {
-		for (size_t left = 0; left < map_width; left += 1) {
+		for (size_t left = 0; left < map->num_cols; left += 1) {
 			if (cell_is_open(top, left, map)) {
 				const t_square maximum_square = get_maximum_square(top, left, map);
 				if (bsq.size < maximum_square.size) {
@@ -51,24 +50,22 @@ static t_square	find_bsq(t_map *map) {
 	return (bsq);
 }
 // マップデータを求めた bsq に従って変更する
-static void	paint_bsq(t_map *p_info, const t_square* bsq) {
-	char	**map = p_info->field_lines;
+static void	paint_bsq(t_map *map, const t_square* bsq) {
+	char**	field = map->field_lines;
+
 	for (size_t i = 0; i < bsq->size; i += 1) {
 		for (size_t j = 0; j < bsq->size; j += 1) {
-			map[bsq->top + i][bsq->left + j] = p_info->full;
+			field[bsq->top + i][bsq->left + j] = map->full;
 		}
 	}
 }
 
-static void	print_map(const t_map *p_info) {
-	char** const	map = p_info->field_lines;
-	const size_t	map_width = get_map_width(map);
+static void	print_map(const t_map* map) {
+	char** const	field = map->field_lines;
 
-	for (size_t i = 0; i < p_info->num_rows; i += 1) {
-		for (size_t j = 0; j < map_width; j += 1) {
-			write(1, &map[i][j], 1);
-		}
-		write(1, "\n", 1);
+	for (size_t i = 0; i < map->num_rows; i += 1) {
+		write(STDOUT_FILENO, field[i], map->num_cols);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
