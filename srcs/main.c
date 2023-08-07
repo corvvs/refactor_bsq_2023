@@ -49,26 +49,30 @@ int		search_out_bsq(int fd)
 {
 	char	*content;	// STDIN のすべての文字列
 	char	**map;		// content を改行で区切ったもの
-	t_info	*info;
+	t_info	info;
 
 	content = ft_read_all(fd);
-	if (validate_content_ends_with_nl(content) == FAIL)
+	if (validate_content_ends_with_nl(content) == FAIL) {
 		return (FAIL);
+	}
 	map = bsq_split(content, '\n');
+	if (map == NULL) {
+		return (FAIL);
+	}
 	for (int i = 0; map[i]; ++i) {
 		printf("%s\n", map[i]);
 	}
-	if (validate_header_line(map) == FAIL)
+	if (validate_header_line(map) == FAIL) {
 		return (FAIL);
-	if (!(info = parse_header_line(map)))
+	}
+	info = parse_header_line(map);
+	if (validate_map(map, &info) == FAIL) {
 		return (FAIL);
-	if (validate_map(map, info) == FAIL)
-		return (FAIL);
-	print_bsq(map, info);
+	}
+	print_bsq(map, &info);
 	// TODO: return (FAIL); 時のメモリリークを直す
-	free(content);
 	free(map);
-	free(info);
+	free(content);
 	return (SUCCESS);
 }
 

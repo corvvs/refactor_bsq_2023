@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:12:02 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:07:30 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ int		validate_header_line(char **map)
 }
 
 // 先頭行をパースして、t_info 構造体に格納する
-t_info	*parse_header_line(char **map)
+t_info	parse_header_line(char **map)
 {
-	t_info	*info;
 	char	*line;
 	int		len;
 	int		i;
@@ -55,16 +54,17 @@ t_info	*parse_header_line(char **map)
 
 	line = map[0];
 	len = ft_strlen(line);
-	info = malloc(sizeof(t_info *));
 	num = malloc(sizeof(char) * (len - 3) + 1);
 	i = -1;
 	while (++i < len - 3)
 		num[i] = line[i];
 	num[i] = '\0';
-	info->num_rows = ft_atoi(num);
-	info->empty = line[len - 3];
-	info->obstacle = line[len - 2];
-	info->full = line[len - 1];
+	int num_rows = ft_atoi(num);
 	free(num);
-	return (info);
+	return (t_info){
+		.num_rows = num_rows,
+		.empty = line[len - 3],
+		.obstacle = line[len - 2],
+		.full = line[len - 1],
+	};
 }
