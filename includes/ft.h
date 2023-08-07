@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:42:55 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:58:12 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ typedef	struct	s_square
 	size_t	size;
 }				t_square;
 
+
+// bsq_session.c
+void	run_bsq_session(int fd);
+
 // read.c
 char*	read_content(int fd);
 
@@ -54,6 +58,8 @@ char*	read_content(int fd);
 bool			is_valid_map(const t_map *info);
 bool			does_content_end_with_nl(char *content);
 
+// bsq_solver.c
+void			solve_bsq(t_map *p_info);
 
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
@@ -64,8 +70,6 @@ char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
 char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
-t_map			parse_header_line(char **map);
-bool			is_empty_cell(size_t col, size_t row, const t_map *p_info);
-void			run_bsq(t_map *p_info);
+t_map			parse_map(char **map);
 
 #endif

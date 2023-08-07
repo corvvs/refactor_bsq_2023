@@ -1,19 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   makesquare2.c                                      :+:      :+:    :+:   */
+/*   bsq_solver.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:43:27 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:58:12 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
+// 位置 (row, col) に物が置けることを確認する
+static bool		is_empty_cell(size_t row, size_t col, const t_map *p_info)
+{
+	char**	map = p_info->field_lines;
+	// 横座標(col)がマップ横幅以内であることを確認
+	if (col >= p_info->num_cols) {
+		return (false);
+	}
+	// 縦座標(row)がマップ縦幅以内であることを確認
+	if (row >= p_info->num_rows) {
+		return (false);
+	}
+	// 座標 (top, left) に物が置けることを確認
+	// NOTE: 条件 == '\0 はいらなくない??
+	if (map[row][col] == p_info->obstacle) {
+		return (false);
+	}
+	return (true);
+}
+
 // カーソル位置で定義される正方形の右辺および下辺がすべて空白であることを確認する
-static bool		square_is_extendible(const t_square* square, const t_map *p_info) {
+static bool		is_extendible_square(const t_square* square, const t_map *p_info) {
 	const size_t	i0 = square->top;
 	const size_t	j0 = square->left;
 	for (size_t k = 0; k < square->size; k += 1) {
@@ -28,9 +48,9 @@ static bool		square_is_extendible(const t_square* square, const t_map *p_info) {
 }
 
 // カーソル位置で定義される正方形を可能な限り拡大する
-static t_square get_maximum_square(size_t top, size_t left, const t_map *p_info) {
+static t_square	get_maximum_square(size_t top, size_t left, const t_map *p_info) {
 	t_square	square = { .top = top, .left = left };
-	for (square.size = 0; square_is_extendible(&square, p_info); square.size += 1);
+	for (square.size = 0; is_extendible_square(&square, p_info); square.size += 1);
 	return (square);
 }
 
@@ -70,7 +90,7 @@ static void	print_map(const t_map* map) {
 }
 
 // bsq = best square を探索する
-void	run_bsq(t_map *map) {
+void	solve_bsq(t_map *map) {
 	const t_square	bsq = find_bsq(map);
 	paint_bsq(map, &bsq);
 	print_map(map);
