@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:37:05 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 12:51:54 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ char	*ft_read_all(int ifd)
 	return (content);
 }
 
-// マップデータを標準入力から読み取る場合の bsq ルーチン
-int		bsq_by_stdin(void)
+int		search_out_bsq(int fd)
 {
 	char	*content;	// STDIN のすべての文字列
 	char	**map;		// content を改行で区切ったもの
 	t_info	*info;
 
-	content = ft_read_all(0);
+	content = ft_read_all(fd);
 	if (validate_content_ends_with_nl(content) == FAIL)
 		return (FAIL);
 	map = ft_split(content, "\n");
@@ -64,36 +63,6 @@ int		bsq_by_stdin(void)
 	if (validate_map(map, info) == FAIL)
 		return (FAIL);
 	print_bsq(map, info);
-	ft_free(&map);
-	free(info);
-	return (SUCCESS);
-}
-
-// マップデータを arguments から読み取る場合の bsq ルーチン
-int		bsq_by_arguments(int argc, char *argv[], int i)
-{
-	int		ifd;
-	char	*content;
-	char	**map;
-	t_info	*info;
-
-	if ((ifd = open(argv[i], O_RDONLY)) == -1)
-		return (FAIL);
-	content = ft_read_all(ifd);
-	if (validate_content_ends_with_nl(content) == FAIL)
-		return (FAIL);
-	close(ifd);
-	map = ft_split(content, "\n");
-	free(content);
-	if (validate_header_line(map) == FAIL)
-		return (FAIL);
-	if (!(info = parse_header_line(map)))
-		return (FAIL);
-	if (validate_map(map, info) == FAIL)
-		return (FAIL);
-	print_bsq(map, info);
-	if (!(i + 1 == argc))
-		ft_putstr("\n");
 	ft_free(&map);
 	free(info);
 	return (SUCCESS);
@@ -103,18 +72,23 @@ int		main(int argc, char *argv[])
 {
 	int i;
 
-	if (argc < 2)
-	{
-		if (bsq_by_stdin() == FAIL)
+	if (argc < 2) {
+		if (search_out_bsq(STDIN_FILENO) == FAIL) {
 			ft_puterror(FT_ERR_MAP);
-	}
-	else
-	{
+		}
+	} else {
 		i = 0;
-		while (++i < argc)
-		{
-			if (bsq_by_arguments(argc, argv, i) == FAIL)
-				ft_puterror(FT_ERR_MAP);
+		while (++i < argc) {
+			if (1 < i) {
+				printf("\n");
+			}
+			int ifd = open(argv[i], O_RDONLY);
+			if (0 <= ifd) {
+				if (search_out_bsq(ifd) == FAIL) {
+					ft_puterror(FT_ERR_MAP);
+				}
+				close(ifd);
+			}
 		}
 	}
 	return (0);
