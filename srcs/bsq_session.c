@@ -5,78 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:58:12 by corvvs           ###   ########.fr       */
+/*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
+/*   Updated: 2023/08/07 23:38:48 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-// 先頭行について単体で完結するバリデーションを行う
-static bool		are_valid_lines(char** const lines) {
-	int		len;
-	char	*line;
-	int		i;
-
-	// 少なくとも2行あることを確認する
-	if (lines[0] == NULL || lines[1] == NULL)
+// 位置 (row, col) に物が置けることを確認する
+static bool		is_empty_cell(size_t row, size_t col, const t_map *p_info)
+{
+	char**	map = p_info->field_lines;
+	// 横座標(col)がマップ横幅以内であることを確認
+	if (col >= p_info->num_cols) {
 		return (false);
-	// 先頭行が4文字以上あることを確認する
-	line = lines[0];
-	len = ft_strlen(line);
-	if (len < 4)
+	}
+	// 縦座標(row)がマップ縦幅以内であることを確認
+	if (row >= p_info->num_rows) {
 		return (false);
-	// 先頭行の末尾3文字が以外がすべて数字であることを確認する
-	i = -1;
-	while (++i < len - 3)
-		if (!(line[i] >= '0' && line[i] <= '9'))
-			return (false);
-	// 先頭行の末尾3文字がすべて printable であることを確認する
-	if (!(ft_is_printable(line[len - 1]) &&
-				ft_is_printable(line[len - 2]) &&
-				ft_is_printable(line[len - 3])))
+	}
+	// 座標 (top, left) に物が置けることを確認
+	// NOTE: 条件 == '\0 はいらなくない??
+	if (map[row][col] == p_info->obstacle) {
 		return (false);
-	// 先頭行の末尾3文字がすべて異なることを確認する
-	if (line[len - 1] == line[len - 2] ||
-			line[len - 2] == line[len - 3] ||
-			line[len - 3] == line[len - 1])
-		return (false);
+	}
 	return (true);
 }
 
-static bool	search_out_bsq(char* content) {
-	char**	lines = bsq_split(content, '\n');
-	if (lines == NULL) {
-		return (false);
+// カーソル位置で定義される正方形の右辺および下辺がすべて空白であることを確認する
+static bool		is_extendible_square(const t_square* square, const t_map *p_info) {
+	const size_t	i0 = square->top;
+	const size_t	j0 = square->left;
+	for (size_t k = 0; k < square->size; k += 1) {
+		if (is_empty_cell(i0 + k, j0 + square->size, p_info) == 0) {
+			return (false);
+		}
+		if (is_empty_cell(i0 + square->size, j0 + k, p_info) == 0) {
+			return (false);
+		}
 	}
-
-	if (!are_valid_lines(lines)) {
-		free(lines);
-		return (false);
-	}
-	t_map	map = parse_map(lines);
-	if (!is_valid_map(&map)) {
-		free(lines);
-		return (false);
-	}
-	solve_bsq(&map);
-	free(lines);
 	return (true);
+}
+
+// カーソル位置で定義される正方形を可能な限り拡大する
+static t_square	get_maximum_square(size_t top, size_t left, const t_map *p_info) {
+	t_square	square = { .top = top, .left = left };
+	for (square.size = 0; is_extendible_square(&square, p_info); square.size += 1);
+	return (square);
+}
+
+static t_square	find_out_bsq(t_map *map) {
+	t_square	bsq = { .size = 0 };
+	// すべてのセルについて, そのセルを左上隅とする正方形の最大サイズを調べる
+	for (size_t top = 0; top < map->num_rows; top += 1) {
+		for (size_t left = 0; left < map->num_cols; left += 1) {
+			if (is_empty_cell(top, left, map)) {
+				const t_square maximum_square = get_maximum_square(top, left, map);
+				if (bsq.size < maximum_square.size) {
+					bsq = maximum_square;
+				}
+			}
+		}
+	}
+	return (bsq);
+}
+// フィールドのうち求めた bsq に当たる部分を full で塗りつぶす
+static void	paint_out_bsq(t_map *map, const t_square* bsq) {
+	char**	field = map->field_lines;
+
+	for (size_t i = 0; i < bsq->size; i += 1) {
+		for (size_t j = 0; j < bsq->size; j += 1) {
+			field[bsq->top + i][bsq->left + j] = map->full;
+		}
+	}
+}
+
+static void	print_map(const t_map* map) {
+	char** const	field = map->field_lines;
+
+	for (size_t i = 0; i < map->num_rows; i += 1) {
+		write(STDOUT_FILENO, field[i], map->num_cols);
+		write(STDOUT_FILENO, "\n", 1);
+	}
 }
 
 void	run_bsq_session(int fd) {
-	if (fd < 0) {
-		// fd is invalid
+	t_map	map;
+
+	if (!generate_map(fd, &map)) {
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}
-	char*	content = read_content(fd);
-	if (content == NULL) {
-		ft_puterror(FT_ERR_MAP);
-		return ;
-	}
-	if (!search_out_bsq(content)) {
-		ft_puterror(FT_ERR_MAP);
-	}
-	free(content);
+	const t_square	best_square = find_out_bsq(&map);
+	paint_out_bsq(&map, &best_square);
+	print_map(&map);
+	destroy_map(&map);
 }

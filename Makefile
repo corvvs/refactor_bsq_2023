@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/07 22:57:02 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/07 23:13:13 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ FILES	:=	\
 			bsq_session.c\
 			read.c\
 			map.c\
-			bsq_solver.c\
 			ft_validate_map.c\
 			ft_puts.c\
 			ft_utility.c\

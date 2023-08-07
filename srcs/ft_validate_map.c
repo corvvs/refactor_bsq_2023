@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:42:35 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 23:11:45 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 // マップ1行目の1文字目のバリデーション
 // NOTE: 必要??
 static bool		is_valid_first_griph(const t_map *info) {
-	char** const	map = info->lines;
+	char** const	field = info->field_lines;
 	// マップ1行目が empty, obstacle, full のいずれかであることを確認する
 	// NOTE: full だとダメなのでは??
-	if (!(map[1][0] == info->empty ||
-			map[1][0] == info->obstacle ||
-			map[1][0] == info->full))
+	if (!(field[0][0] == info->empty ||
+			field[0][0] == info->obstacle ||
+			field[0][0] == info->full))
 		return (false);
 	return (true);
 }

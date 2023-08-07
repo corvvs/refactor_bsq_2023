@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:58:12 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 23:24:04 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,17 @@
 # define FT_BUFSIZ 320000
 # define FT_ERR_MAP "map error\n"
 
-typedef	struct	s_info
+
+typedef struct s_basedata
 {
+	char*	content;
 	char**	lines;
+}	t_basedata;
+
+
+typedef	struct	s_map
+{
+	t_basedata	basedata;
 	// ヘッダー行; フィールド行の行数と各種文字を定義する行
 	char*	header_line;
 	// フィールド行
@@ -54,12 +62,13 @@ void	run_bsq_session(int fd);
 // read.c
 char*	read_content(int fd);
 
+// map.c
+bool	generate_map(int fd, t_map* map_ptr);
+void	destroy_map(t_map* map);
+
 // ft_validate_map
 bool			is_valid_map(const t_map *info);
 bool			does_content_end_with_nl(char *content);
-
-// bsq_solver.c
-void			solve_bsq(t_map *p_info);
 
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
@@ -70,6 +79,5 @@ char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
 char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
-t_map			parse_map(char **map);
 
 #endif
