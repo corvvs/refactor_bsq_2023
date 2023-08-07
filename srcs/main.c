@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 08:13:14 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_free(char ***map)
 	*map = NULL;
 }
 
-char	*ft_read(int ifd)
+// ifd から全データを読み取り, 1つの文字列に結合して返す
+char	*ft_read_all(int ifd)
 {
 	char	*content;
 	char	buf[FT_BUFSIZ + 1];
@@ -46,22 +47,22 @@ char	*ft_read(int ifd)
 
 int		ft_main_1(void)
 {
-	char	*content;
-	char	**map;
+	char	*content;	// STDIN のすべての文字列
+	char	**map;		// content を改行で区切ったもの
 	t_info	*info;
 
-	content = ft_read(0);
-	if (ft_validate_4(content) == FAIL)
+	content = ft_read_all(0);
+	if (validate_content_ends_with_nl(content) == FAIL)
 		return (FAIL);
 	map = ft_split(content, "\n");
 	free(content);
-	if (ft_validate_5(map) == FAIL)
+	if (validate_header_line(map) == FAIL)
 		return (FAIL);
-	if (!(info = ft_prse(map)))
+	if (!(info = parse_header_line(map)))
 		return (FAIL);
-	if (ft_validate(map, info) == FAIL)
+	if (validate_map(map, info) == FAIL)
 		return (FAIL);
-	ft_make_map(map, info);
+	print_bsq(map, info);
 	ft_free(&map);
 	free(info);
 	return (SUCCESS);
@@ -76,19 +77,19 @@ int		ft_main_2(int argc, char *argv[], int i)
 
 	if ((ifd = open(argv[i], O_RDONLY)) == -1)
 		return (FAIL);
-	content = ft_read(ifd);
-	if (ft_validate_4(content) == FAIL)
+	content = ft_read_all(ifd);
+	if (validate_content_ends_with_nl(content) == FAIL)
 		return (FAIL);
 	close(ifd);
 	map = ft_split(content, "\n");
 	free(content);
-	if (ft_validate_5(map) == FAIL)
+	if (validate_header_line(map) == FAIL)
 		return (FAIL);
-	if (!(info = ft_prse(map)))
+	if (!(info = parse_header_line(map)))
 		return (FAIL);
-	if (ft_validate(map, info) == FAIL)
+	if (validate_map(map, info) == FAIL)
 		return (FAIL);
-	ft_make_map(map, info);
+	print_bsq(map, info);
 	if (!(i + 1 == argc))
 		ft_putstr("\n");
 	ft_free(&map);
