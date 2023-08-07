@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:30:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 00:14:07 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ bool	generate_map(int fd, t_map* map_ptr) {
 	if (fd < 0) {
 		return (false);
 	}
-	
 	char*	content = read_content(fd);
 	if (content == NULL) {
 		return (false);

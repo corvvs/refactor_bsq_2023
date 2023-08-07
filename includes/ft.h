@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:41:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 00:49:14 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define FT_BUFSIZ 320000
 # define FT_ERR_MAP "map error\n"
 
+typedef struct s_capped_buffer {
+	char*	buffer;
+	size_t	capacity;
+	size_t	used;
+}	t_capped_buffer;
 
 typedef struct s_basedata
 {
 	char*	content;
 	char**	lines;
 }	t_basedata;
-
 
 typedef	struct	s_map
 {
@@ -70,16 +73,21 @@ bool		generate_map(int fd, t_map* map_ptr);
 void		destroy_map(t_map* map);
 
 // ft_validate_map
-bool			is_valid_map(const t_map *info);
-bool			does_content_end_with_nl(char *content);
+bool		is_valid_map(const t_map *info);
+bool		does_content_end_with_nl(char *content);
+
+// capped_buffer.c
+bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const char* data, size_t data_size, size_t minimum_size);
+
+// ft_utility.c
+size_t		ft_strlen(const char *str);
+void*		ft_memcpy(void* dst, const void* src, size_t n);
+int			ft_is_printable(char c);
+
 
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
-size_t			ft_strlen(const char *str);
-int				ft_is_printable(char c);
-char			*ft_strdup(char *src);
-char			*ft_strjoin(char *s1, char *s2);
 char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
 
