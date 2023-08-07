@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:51:54 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:29:51 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,38 @@ int	search_bsq_from_content(char* content) {
 	return (SUCCESS);
 }
 
+void	search_out_bsq(int fd)
+{
+	char*	content = read_content(fd);
+	if (content == NULL) {
+		ft_puterror(FT_ERR_MAP);
+		return ;
+	}
+	if (search_bsq_from_content(content) == FAIL) {
+		ft_puterror(FT_ERR_MAP);
+	}
+	free(content);
+}
+
 int		main(int argc, char *argv[])
 {
-	int i;
-
 	if (argc < 2) {
-		if (search_out_bsq(STDIN_FILENO) == FAIL) {
+		// [from stdin]
+		search_out_bsq(STDIN_FILENO);
+		return (0);
+	}
+	// [using arguments]
+	for (int i = 1; i < argc; ++i) {
+		if (1 < i) {
+			printf("\n");
+		}
+		int ifd = open(argv[i], O_RDONLY);
+		if (ifd < 0) {
 			ft_puterror(FT_ERR_MAP);
+			continue;
 		}
-	} else {
-		i = 0;
-		while (++i < argc) {
-			if (1 < i) {
-				printf("\n");
-			}
-			int ifd = open(argv[i], O_RDONLY);
-			if (0 <= ifd) {
-				if (search_out_bsq(ifd) == FAIL) {
-					ft_puterror(FT_ERR_MAP);
-				}
-				close(ifd);
-			}
-		}
+		search_out_bsq(ifd);
+		close(ifd);
 	}
 	return (0);
 }
