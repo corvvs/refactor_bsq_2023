@@ -54,8 +54,10 @@ int		search_out_bsq(int fd)
 	content = ft_read_all(fd);
 	if (validate_content_ends_with_nl(content) == FAIL)
 		return (FAIL);
-	map = ft_split(content, "\n");
-	free(content);
+	map = bsq_split(content, '\n');
+	for (int i = 0; map[i]; ++i) {
+		printf("%s\n", map[i]);
+	}
 	if (validate_header_line(map) == FAIL)
 		return (FAIL);
 	if (!(info = parse_header_line(map)))
@@ -63,7 +65,9 @@ int		search_out_bsq(int fd)
 	if (validate_map(map, info) == FAIL)
 		return (FAIL);
 	print_bsq(map, info);
-	ft_free(&map);
+	// TODO: return (FAIL); 時のメモリリークを直す
+	free(content);
+	free(map);
 	free(info);
 	return (SUCCESS);
 }

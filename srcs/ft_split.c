@@ -6,110 +6,48 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:50:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:04:29 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-// NOTE: 以下のグローバル変数群は一度しか初期化されないので, ft_split が複数回呼び出されるとアウト
-int		g_word_index = 0;
-int		g_start = 0;
-int		g_end = 0;
-int		g_state = 0;
-
-int		ft_is_in_charset(char c, char *charset)
-{
-	int i;
-
-	i = 0;
-	while (charset[i])
-	{
-		if (charset[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
+static int	is_delimiter(char ch, char delimiter) {
+	return ch == delimiter || ch == '\0';
 }
 
-int		ft_get_wc(char *str, char *charset)
-{
-	int wc;
-	int state;
+static size_t	count_words(const char* str, char delimiter) {
+	size_t	n = 1;
+	for (size_t i = 0; str[i]; ++i) {
+		n += is_delimiter(str[i], delimiter);
+	}
+	return (n);
+}
 
-	wc = 0;
-	state = OUT;
-	while (*str)
-	{
-		if (ft_is_in_charset(*str, charset))
-			state = OUT;
-		else if (state == OUT)
-		{
-			state = IN;
-			++wc;
+// str を delimiterで区切った文字列の配列を返す.
+// !! strを破壊的に変更する !!
+// !! 返り値配列には空文字列が含まれうる !!
+// !! 返り値配列の各要素は free-able ではない !!
+char**	bsq_split(char* str, char delimiter) {
+	size_t	n_words = count_words(str, delimiter);
+	char**	splitted = malloc(sizeof(char*) * (n_words + 1));
+	if (!splitted) {
+		return (NULL);
+	}
+	size_t	i_splitted = 0;
+	size_t	begin_word = 0;
+	size_t	end_word = 0;
+	for (; i_splitted < n_words;) {
+		while (!is_delimiter(str[end_word], delimiter)) {
+			end_word += 1;
 		}
-		++str;
+		str[end_word] = '\0';
+		splitted[i_splitted] = &str[begin_word];
+		i_splitted += 1;
+		end_word += 1;
+		begin_word = end_word;
 	}
-	return (wc);
+	splitted[i_splitted] = NULL;
+	return (splitted);
 }
 
-void	ft_update_in_word(int i)
-{
-	if (g_state == OUT)
-	{
-		g_state = IN;
-		g_start = i;
-		g_end = i;
-	}
-	else
-		g_end = i;
-}
-
-void	ft_add_last_word(char **res, char *str, int i)
-{
-	int j;
-
-	if (g_state == IN)
-	{
-		res[g_word_index] = malloc(sizeof(char) * ((i - g_start) + 1));
-		j = -1;
-		while (g_start <= i)
-			res[g_word_index][++j] = str[g_start++];
-		res[g_word_index][++j] = '\0';
-		g_word_index++;
-	}
-	res[g_word_index] = 0;
-	g_word_index = 0;
-	g_start = 0;
-	g_end = 0;
-	g_state = 0;
-}
-
-char	**ft_split(char *str, char *charset)
-{
-	char	**res;
-	int		i;
-	int		j;
-
-	res = malloc(sizeof(char *) * (ft_get_wc(str, charset) + 1));
-	i = -1;
-	while (str[++i])
-	{
-		if (ft_is_in_charset(str[i], charset))
-		{
-			if (g_state == OUT)
-				continue;
-			g_state = OUT;
-			res[g_word_index] = malloc(sizeof(char) * ((g_end - g_start) + 1 + 1));
-			j = -1;
-			while (g_start <= g_end)
-				res[g_word_index][++j] = str[g_start++];
-			res[g_word_index][++j] = '\0';
-			g_word_index++;
-		}
-		else
-			ft_update_in_word(i);
-	}
-	ft_add_last_word(res, str, i);
-	return (res);
-}
