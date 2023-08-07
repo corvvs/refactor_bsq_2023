@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:49:35 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:28:49 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
 		.top = top,
 		.left = left,
 	};
-	for (square.size = 0; is_extendible_square(&square, map); square.size += 1) {}
+	if (is_empty_cell(top, left, map)) {
+		for (square.size = 0; is_extendible_square(&square, map); square.size += 1) {}
+	}
 	return (square);
 }
