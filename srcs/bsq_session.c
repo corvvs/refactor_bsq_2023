@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:51:52 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 01:36:50 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static void	print_map(const t_map* map) {
 	char** const	field = map->field_lines;
 
 	for (size_t i = 0; i < map->num_rows; i += 1) {
-		write(STDOUT_FILENO, field[i], map->num_cols);
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putnstr_fd(STDOUT_FILENO, field[i], map->num_cols);
+		ft_putnstr_fd(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -49,7 +49,7 @@ void	run_bsq_session(int fd) {
 	t_map	map;
 
 	if (!generate_map(fd, &map)) {
-		ft_puterror(FT_ERR_MAP);
+		ft_putstr_fd(STDERR_FILENO, FT_ERR_MAP);
 		return ;
 	}
 	const t_square	best_square = find_out_bsq(&map);

@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:28:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 01:36:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ void*		ft_memcpy(void* dst, const void* src, size_t n);
 int			ft_is_printable(char c);
 
 // bsq_split.c
-char**			bsq_split(char* str, char delimiter);
+char**		bsq_split(char* str, char delimiter);
 
-void			ft_putchar(char c);
-void			ft_putstr(char *str);
-void			ft_puterror(char *str);
+// ft_puts.c
+void		ft_putstr_fd(int fd, const char *str);
+void		ft_putnstr_fd(int fd, const char *str, size_t max_len);
+
 int				ft_atoi(char *str);
 
 #endif
