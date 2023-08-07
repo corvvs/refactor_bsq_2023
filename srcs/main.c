@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 12:37:05 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	*ft_read_all(int ifd)
 	return (content);
 }
 
-int		ft_main_1(void)
+// マップデータを標準入力から読み取る場合の bsq ルーチン
+int		bsq_by_stdin(void)
 {
 	char	*content;	// STDIN のすべての文字列
 	char	**map;		// content を改行で区切ったもの
@@ -68,7 +69,8 @@ int		ft_main_1(void)
 	return (SUCCESS);
 }
 
-int		ft_main_2(int argc, char *argv[], int i)
+// マップデータを arguments から読み取る場合の bsq ルーチン
+int		bsq_by_arguments(int argc, char *argv[], int i)
 {
 	int		ifd;
 	char	*content;
@@ -103,7 +105,7 @@ int		main(int argc, char *argv[])
 
 	if (argc < 2)
 	{
-		if (ft_main_1() == FAIL)
+		if (bsq_by_stdin() == FAIL)
 			ft_puterror(FT_ERR_MAP);
 	}
 	else
@@ -111,7 +113,7 @@ int		main(int argc, char *argv[])
 		i = 0;
 		while (++i < argc)
 		{
-			if (ft_main_2(argc, argv, i) == FAIL)
+			if (bsq_by_arguments(argc, argv, i) == FAIL)
 				ft_puterror(FT_ERR_MAP);
 		}
 	}
