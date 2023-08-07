@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:47:55 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:48:52 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	search_bsq_from_content(char* content) {
 		return (FAIL);
 	}
 
-	// for (int i = 0; map[i]; ++i) {
-	// 	printf("%s\n", map[i]);
+	// for (int i = 0; lines[i]; ++i) {
+	// 	printf("%s\n", lines[i]);
 	// }
 	// printf("--\n");
 
@@ -27,13 +27,13 @@ static int	search_bsq_from_content(char* content) {
 		free(lines);
 		return (FAIL);
 	}
-	t_info	info = parse_header_line(lines);
-	if (validate_map(lines, &info) == FAIL) {
+	t_info	map = parse_header_line(lines);
+	if (validate_map(&map) == FAIL) {
 		free(lines);
 		return (FAIL);
 	}
-	print_bsq(lines, &info);
-	free(info.lines);
+	print_bsq(lines, &map);
+	free(map.lines);
 	return (SUCCESS);
 }
 

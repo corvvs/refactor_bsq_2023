@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:47:19 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:52:38 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ typedef	struct	s_tempcrs
 // read.c
 char*	read_content(int fd);
 
+// ft_validate_map
+int				validate_map(const t_info *info);
+int				validate_content_ends_with_nl(char *content);
+
+
 int				g_max;
 int				g_col;
 int				g_row;
@@ -73,8 +78,6 @@ char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
 int				validate_header_line(char **map);
 t_info			parse_header_line(char **map);
-int				validate_map(char **map, t_info *info);
-int				validate_content_ends_with_nl(char *content);
 void			init_cursor(t_tempcrs *p_tempcrs);
 int				cell_is_open(char **map, int col, int row, t_info *p_info);
 void			print_bsq(char **map, t_info *p_info);

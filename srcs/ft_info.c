@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:47:40 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:53:47 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ t_info	parse_header_line(char **lines)
 	int num_rows = ft_atoi(num);
 	free(num);
 	return (t_info){
-		.lines = lines,
-		.header_line = header_line,
-		.field_lines = lines + 1,
-		.num_rows = num_rows,
-		.empty = header_line[len - 3],
-		.obstacle = header_line[len - 2],
-		.full = header_line[len - 1],
+		.lines			= lines,
+		.header_line	= header_line,
+		.field_lines	= lines + 1,
+		.num_rows		= num_rows,
+		.empty			= header_line[len - 3],
+		.obstacle		= header_line[len - 2],
+		.full			= header_line[len - 1],
 	};
 }
