@@ -6,12 +6,12 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 02:21:29 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 02:47:27 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		:= gcc
-CFLAGS	:= -Wall -Wextra -Werror -Iincludes -fsanitize=address -g
+CFLAGS	:= -Wall -Wextra -Werror -Iincludes -fsanitize=address -g -D DEBUG
 SRCDIR	:=	srcs
 OBJDIR	:=	objs
 INCDIR	:=	includes

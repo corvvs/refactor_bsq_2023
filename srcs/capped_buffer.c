@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 01:45:42 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:49:31 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ bool	store_to_capped_buffer(
 	size_t minimum_size
 ) {
 	if (!extend_capped_buffer(capped_buffer, data_size, minimum_size)) {
+		DEBUGERR("failed to store: %p", capped_buffer);
 		return (false);
 	}
 	ft_memcpy(capped_buffer->buffer + capped_buffer->used, data, data_size);

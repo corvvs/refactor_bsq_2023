@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 02:26:57 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:50:41 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ static t_map	parse_map(char* content, char** lines) {
 static char**	generate_lines(char* content) {
 	char**	lines = bsq_split(content, '\n');
 	if (lines == NULL) {
+		DEBUGERR("failed to split content: %s", content);
 		return (NULL);
 	}
 	if (!are_valid_lines(lines)) {
+		DEBUGERR("invalid lines: %s", content);
 		free(lines);
 		return (NULL);
 	}
@@ -44,6 +46,7 @@ static char**	generate_lines(char* content) {
 
 bool	generate_map(int fd, t_map* map_ptr) {
 	if (fd < 0) {
+		DEBUGERR("invalid fd: %d", fd);
 		return (false);
 	}
 	char*	content = read_content(fd);

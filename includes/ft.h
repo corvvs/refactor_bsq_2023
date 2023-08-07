@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 02:26:57 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:41:59 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdint.h>
 # include <stdbool.h>
+# include "common.h"
 
 # define FT_ERR_MAP "map error\n"
 

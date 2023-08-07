@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 01:56:33 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:49:21 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char*	read_all_text(int ifd) {
 	while (true) {
 		ssize_t	read_size = read(ifd, read_buffer, sizeof(read_buffer));
 		if (read_size < 0) {
+			DEBUGERR("read error: %zd", read_size);
 			free(joined.buffer);
 			return (NULL);
 		} else if (read_size == 0) {
