@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:43:26 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:41:59 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdint.h>
 # include <stdbool.h>
+# include "common.h"
 
 # define FT_ERR_MAP "map error\n"
 
@@ -72,9 +74,14 @@ char*		read_content(int fd);
 bool		generate_map(int fd, t_map* map_ptr);
 void		destroy_map(t_map* map);
 
-// ft_validate_map
+// bsq_validator_content.c
+bool		is_nul_terminated_content(char *content);
+
+// bsq_validator_lines.c
+bool		are_valid_lines(char** const lines);
+
+// bsq_validator_map.c
 bool		is_valid_map(const t_map *info);
-bool		does_content_end_with_nl(char *content);
 
 // capped_buffer.c
 bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const void* data, size_t data_size, size_t minimum_size);
@@ -91,6 +98,7 @@ char**		bsq_split(char* str, char delimiter);
 void		ft_putstr_fd(int fd, const char *str);
 void		ft_putnstr_fd(int fd, const char *str, size_t max_len);
 
-int				ft_atoi(char *str);
+// bsq_number.c
+bool		bsq_str_to_u64(const char *str, size_t max_len, uint64_t *result);
 
 #endif

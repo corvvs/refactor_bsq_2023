@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:36:50 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:03:24 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ static void	print_map(const t_map* map) {
 	}
 }
 
-void	run_bsq_session(int fd) {
+void	run_bsq_session(int ifd) {
 	t_map	map;
 
-	if (!generate_map(fd, &map)) {
+	if (!generate_map(ifd, &map)) {
 		ft_putstr_fd(STDERR_FILENO, FT_ERR_MAP);
 		return ;
 	}
 	const t_square	best_square = find_out_bsq(&map);
+	DEBUGOUT("best_square: (%zu, %zu), size: %zu",
+		best_square.top, best_square.left, best_square.size);
 	paint_out_bsq(&map, &best_square);
 	print_map(&map);
 	destroy_map(&map);

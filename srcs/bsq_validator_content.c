@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bsq_validator_content.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:04:52 by corvvs           ###   ########.fr       */
+/*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
+/*   Updated: 2023/08/08 03:05:54 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-int		main(int argc, char *argv[]) {
-	if (argc < 2) {
-		// [from stdin]
-		run_bsq_session(STDIN_FILENO);
-		return (0);
+// content が改行で終了していることを確認
+bool		is_nul_terminated_content(char *content) {
+	size_t	n = ft_strlen(content);
+	if (n == 0) {
+		DEBUGERR("%s", "empty content");
+		return (false);
 	}
-	// [using arguments]
-	for (int i = 1; i < argc; ++i) {
-		if (1 < i) {
-			ft_putstr_fd(STDIN_FILENO, "\n");
-		}
-		DEBUGINFO("ping session for \"%s\"", argv[i]);
-		int ifd = open(argv[i], O_RDONLY);
-		run_bsq_session(ifd);
-		if (ifd < 0) {
-			close(ifd);
-		}
+	if (content[n - 1] != '\n') {
+		DEBUGERR("content does not end with nl: %c", content[n - 1]);
+		return (false);
 	}
-	return (0);
+	return (true);
 }

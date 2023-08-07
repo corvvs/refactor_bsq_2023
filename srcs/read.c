@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 00:48:59 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 02:49:21 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char*	read_all_text(int ifd) {
 	while (true) {
 		ssize_t	read_size = read(ifd, read_buffer, sizeof(read_buffer));
 		if (read_size < 0) {
+			DEBUGERR("read error: %zd", read_size);
 			free(joined.buffer);
 			return (NULL);
 		} else if (read_size == 0) {
@@ -46,7 +47,7 @@ char*	read_content(int ifd) {
 		return (NULL);
 	}
 	// content は改行(nl)で終わっていて欲しい
-	if (!does_content_end_with_nl(content)) {
+	if (!is_nul_terminated_content(content)) {
 		free(content);
 		return (NULL);
 	}
