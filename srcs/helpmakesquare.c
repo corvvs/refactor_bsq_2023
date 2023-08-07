@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 21:49:21 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:15:12 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft.h"
 
 // マップの横幅を返す
-size_t		get_map_width(char **map) {
+size_t		get_map_width(char** const map) {
 	return (ft_strlen(map[0]));
 }
 
