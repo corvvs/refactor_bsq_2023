@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 00:56:51 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:50:51 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
+// NOTE: 以下のグローバル変数群は一度しか初期化されないので, ft_split が複数回呼び出されるとアウト
 int		g_word_index = 0;
 int		g_start = 0;
 int		g_end = 0;
@@ -99,7 +100,7 @@ char	**ft_split(char *str, char *charset)
 			if (g_state == OUT)
 				continue;
 			g_state = OUT;
-			res[g_word_index] = malloc(sizeof(char) * ((g_end - g_start) + 1));
+			res[g_word_index] = malloc(sizeof(char) * ((g_end - g_start) + 1 + 1));
 			j = -1;
 			while (g_start <= g_end)
 				res[g_word_index][++j] = str[g_start++];
