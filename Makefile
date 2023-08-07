@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 00:37:59 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 01:28:45 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ FILES	:=	\
 			capped_buffer.c\
 			ft_puts.c\
 			ft_utility.c\
-			ft_split.c\
+			bsq_split.c\
 			ft_atoi.c\
 
 SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
