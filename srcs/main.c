@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:51:54 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:25:42 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,37 @@ int	search_bsq_from_content(char* content) {
 	return (SUCCESS);
 }
 
+int	search_out_bsq(int fd)
+{
+	char*	content = read_content(fd);
+	if (content == NULL) {
+		return (FAIL);
+	}
+	const int status = search_bsq_from_content(content);
+	free(content);
+	return (status);
+}
+
 int		main(int argc, char *argv[])
 {
-	int i;
-
 	if (argc < 2) {
 		if (search_out_bsq(STDIN_FILENO) == FAIL) {
 			ft_puterror(FT_ERR_MAP);
 		}
 	} else {
-		i = 0;
-		while (++i < argc) {
+		for (int i = 1; i < argc; ++i) {
 			if (1 < i) {
 				printf("\n");
 			}
 			int ifd = open(argv[i], O_RDONLY);
-			if (0 <= ifd) {
-				if (search_out_bsq(ifd) == FAIL) {
-					ft_puterror(FT_ERR_MAP);
-				}
-				close(ifd);
+			if (ifd < 0) {
+				ft_puterror(FT_ERR_MAP);
+				continue;
 			}
+			if (search_out_bsq(ifd) == FAIL) {
+				ft_puterror(FT_ERR_MAP);
+			}
+			close(ifd);
 		}
 	}
 	return (0);
