@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   makesquare2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <louisnop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 02:37:11 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ extern	int g_max;
 extern	int g_col;
 extern	int g_row;
 
-int		ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+// カーソル位置で定義される正方形の右辺および下辺がすべて空白であることを確認する
+int		square_edge_is_open(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 {
 	int i;
 
 	i = 0;
 	while (i <= p_tempcrs->size)
 	{
-		if (ft_check_1(map, p_tempcrs->col + i,
+		if (cell_is_open(map, p_tempcrs->col + i,
 		p_tempcrs->row + p_tempcrs->size, p_info) == 0)
 		{
 			return (0);
@@ -33,7 +34,7 @@ int		ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 	i = 0;
 	while (i <= p_tempcrs->size)
 	{
-		if (ft_check_1(map, p_tempcrs->col + p_tempcrs->size,
+		if (cell_is_open(map, p_tempcrs->col + p_tempcrs->size,
 		p_tempcrs->row + i, p_info) == 0)
 			return (0);
 		i++;
@@ -41,10 +42,11 @@ int		ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 	return (1);
 }
 
-void	ft_check_3(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+// カーソル位置で定義される正方形を可能な限り拡大する
+void	extend_square_by_cursor(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 {
 	p_tempcrs->size = 0;
-	while (ft_check_2(map, p_tempcrs, p_info) == 1)
+	while (square_edge_is_open(map, p_tempcrs, p_info) == 1)
 	{
 		p_tempcrs->size++;
 	}
@@ -56,7 +58,7 @@ void	ft_check_3(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 	}
 }
 
-void	ft_put_map(char **map, t_info *p_info)
+void	print_map(char **map, t_info *p_info)
 {
 	int i;
 	int j;
@@ -65,7 +67,7 @@ void	ft_put_map(char **map, t_info *p_info)
 	while (i <= p_info->num_rows)
 	{
 		j = 0;
-		while (j < ft_map_colsize(map))
+		while (j < get_map_width(map))
 		{
 			write(1, &map[i][j], 1);
 			j++;
@@ -75,7 +77,8 @@ void	ft_put_map(char **map, t_info *p_info)
 	}
 }
 
-void	ft_change_map(char **map, t_info *p_info)
+// マップデータを求めた bsq に従って変更し, 出力する
+void	print_answer(char **map, t_info *p_info)
 {
 	int		i;
 	int		j;
@@ -94,35 +97,37 @@ void	ft_change_map(char **map, t_info *p_info)
 		}
 		i++;
 	}
-	ft_put_map(map, p_info);
+	print_map(map, p_info);
 	free(p_bsq);
 	return ;
 }
 
-void	ft_make_map(char **map, t_info *p_info)
+// bsq = best square を探索する
+void	print_bsq(char **map, t_info *p_info)
 {
 	t_tempcrs *p_tempcrs;
 
+	// カーソルを初期化する
 	g_max = 0;
 	g_col = 0;
 	g_row = 0;
 	p_tempcrs = malloc(sizeof(t_tempcrs));
-	set_tempcrs(p_tempcrs);
+	init_cursor(p_tempcrs);
+	// すべてのセルについて, そのセルを左上隅とする正方形の最大サイズを調べる
 	while (p_tempcrs->row <= p_info->num_rows)
 	{
 		p_tempcrs->col = 0;
-		while (p_tempcrs->col < ft_map_colsize(map))
+		while (p_tempcrs->col < get_map_width(map))
 		{
-			if (ft_check_1(map, p_tempcrs->col,
-			p_tempcrs->row, p_info) == 1)
+			if (cell_is_open(map, p_tempcrs->col, p_tempcrs->row, p_info) == 1)
 			{
-				ft_check_3(map, p_tempcrs, p_info);
+				extend_square_by_cursor(map, p_tempcrs, p_info);
 			}
 			p_tempcrs->col++;
 		}
 		p_tempcrs->row++;
 	}
-	ft_change_map(map, p_info);
+	print_answer(map, p_info);
 	free(p_tempcrs);
 	return ;
 }

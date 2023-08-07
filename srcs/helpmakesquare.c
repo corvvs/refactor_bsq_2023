@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpmakesquare.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <louisnop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 02:37:11 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:25:26 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ extern	int g_max;
 extern	int g_col;
 extern	int g_row;
 
-int		ft_map_colsize(char **map)
+// マップの横幅を返す
+int		get_map_width(char **map)
 {
 	int count;
 
@@ -29,23 +30,31 @@ int		ft_map_colsize(char **map)
 	return (count);
 }
 
-void	set_tempcrs(t_tempcrs *p_tempcrs)
+// カーソル構造体を初期化する
+void	init_cursor(t_tempcrs *p_tempcrs)
 {
 	p_tempcrs->row = 1;
 	p_tempcrs->col = 0;
 	p_tempcrs->size = 0;
 }
 
-int		ft_check_1(char **map, int col, int row, t_info *p_info)
+// 位置 (col, row) に物が置けることを確認する
+int		cell_is_open(char **map, int col, int row, t_info *p_info)
 {
-	if (col == ft_map_colsize(map))
+	// 横座標(col)がマップ横幅以内であることを確認
+	// NOTE: == ではなく >= が適切
+	if (col == get_map_width(map))
 	{
 		return (0);
 	}
+	// 縦座標(row)がマップ縦幅以内であることを確認
+	// NOTE: == ではなく >= が適切
 	if (row == p_info->num_rows + 1)
 	{
 		return (0);
 	}
+	// 座標 (col, row) に物が置けることを確認
+	// NOTE: 条件 == '\0 はいらなくない??
 	if (map[row][col] == p_info->obstacle || map[row][col] == '\0')
 	{
 		return (0);

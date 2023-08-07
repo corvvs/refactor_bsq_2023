@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <louisnop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 08:07:27 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
 char			**ft_split(char *str, char *charset);
 int				ft_atoi(char *str);
-int				ft_validate_5(char **map);
-t_info			*ft_prse(char **map);
-int				ft_validate(char **map, t_info *info);
-int				ft_validate_4(char *content);
-void			set_tempcrs(t_tempcrs *p_tempcrs);
-int				ft_check_1(char **map, int col, int row, t_info *p_info);
-void			ft_make_map(char **map, t_info *p_info);
+int				validate_header_line(char **map);
+t_info			*parse_header_line(char **map);
+int				validate_map(char **map, t_info *info);
+int				validate_content_ends_with_nl(char *content);
+void			init_cursor(t_tempcrs *p_tempcrs);
+int				cell_is_open(char **map, int col, int row, t_info *p_info);
+void			print_bsq(char **map, t_info *p_info);
 void			set_bsq(t_bsq *p_bsq);
-int				ft_map_colsize(char **map);
+int				get_map_width(char **map);
 
 #endif
