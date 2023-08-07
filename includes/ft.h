@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:09:39 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef	struct	s_info
 	// フィールド行
 	char**	field_lines;
 	// ヘッダー行で定義されたフィールド行の行数
-	int		num_rows;
+	size_t	num_rows;
 	// ヘッダー行で定義された empty 文字
 	char	empty;
 	// ヘッダー行で定義された obstacle 文字
@@ -49,12 +49,12 @@ typedef	struct	s_info
 	char	full;
 }				t_map;
 
-typedef	struct	s_tempcrs
+typedef	struct	s_square
 {
-	int	col;
-	int	row;
-	int	size;
-}				t_tempcrs;
+	size_t	top;
+	size_t	left;
+	size_t	size;
+}				t_square;
 
 // read.c
 char*	read_content(int fd);
@@ -64,9 +64,6 @@ int				validate_map(const t_map *info);
 int				validate_content_ends_with_nl(char *content);
 
 
-int				g_max;
-int				g_col;
-int				g_row;
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
@@ -77,10 +74,8 @@ char			*ft_strjoin(char *s1, char *s2);
 char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
 t_map			parse_header_line(char **map);
-void			init_cursor(t_tempcrs *p_tempcrs);
-int				cell_is_open(char **map, int col, int row, t_map *p_info);
+int				cell_is_open(size_t col, size_t row, const t_map *p_info);
 void			run_bsq(t_map *p_info);
-void			set_bsq(t_bsq *p_bsq);
-int				get_map_width(char **map);
+size_t			get_map_width(char **map);
 
 #endif
