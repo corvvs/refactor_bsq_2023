@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:06:02 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int				ft_strlen(char *str);
 int				ft_is_printable(char c);
 char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
-char			**ft_split(char *str, char *charset);
+char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
 int				validate_header_line(char **map);
-t_info			*parse_header_line(char **map);
+t_info			parse_header_line(char **map);
 int				validate_map(char **map, t_info *info);
 int				validate_content_ends_with_nl(char *content);
 void			init_cursor(t_tempcrs *p_tempcrs);
