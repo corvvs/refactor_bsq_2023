@@ -6,66 +6,44 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:10:03 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-extern	int g_max;
-extern	int g_col;
-extern	int g_row;
-
 // カーソル位置で定義される正方形の右辺および下辺がすべて空白であることを確認する
-int		square_edge_is_open(char **map, t_tempcrs *p_tempcrs, t_map *p_info)
+static int		square_is_extendible(const t_square* square, const t_map *p_info)
 {
-	int i;
-
-	i = 0;
-	while (i <= p_tempcrs->size)
-	{
-		if (cell_is_open(map, p_tempcrs->col + i,
-		p_tempcrs->row + p_tempcrs->size, p_info) == 0)
-		{
+	const size_t	i0 = square->top;
+	const size_t	j0 = square->left;
+	for (size_t k = 0; k < square->size; k += 1) {
+		if (cell_is_open(i0 + k, j0 + square->size, p_info) == 0) {
 			return (0);
 		}
-		i++;
-	}
-	i = 0;
-	while (i <= p_tempcrs->size)
-	{
-		if (cell_is_open(map, p_tempcrs->col + p_tempcrs->size,
-		p_tempcrs->row + i, p_info) == 0)
+		if (cell_is_open(i0 + square->size, j0 + k, p_info) == 0) {
 			return (0);
-		i++;
+		}
 	}
 	return (1);
 }
 
 // カーソル位置で定義される正方形を可能な限り拡大する
-void	extend_square_by_cursor(char **map, t_tempcrs *p_tempcrs, t_map *p_info)
+static t_square get_maximum_square(size_t top, size_t left, const t_map *p_info)
 {
-	p_tempcrs->size = 0;
-	while (square_edge_is_open(map, p_tempcrs, p_info) == 1)
-	{
-		p_tempcrs->size++;
-	}
-	if (g_max < p_tempcrs->size)
-	{
-		g_max = p_tempcrs->size;
-		g_col = p_tempcrs->col;
-		g_row = p_tempcrs->row;
-	}
+	t_square	square = { .top = top, .left = left, .size = 0 };
+	for (square.size = 0; square_is_extendible(&square, p_info); square.size += 1);
+	return (square);
 }
 
-void	print_map(char **map, t_map *p_info)
+static void	print_map(const t_map *p_info)
 {
-	int i;
-	int j;
+	char**	map = p_info->field_lines;
+	size_t	i;
+	size_t	j;
 
-	i = 1;
-	while (i <= p_info->num_rows)
-	{
+	i = 0;
+	while (i <= p_info->num_rows) {
 		j = 0;
 		while (j < get_map_width(map))
 		{
@@ -77,57 +55,32 @@ void	print_map(char **map, t_map *p_info)
 	}
 }
 
-// マップデータを求めた bsq に従って変更し, 出力する
-void	print_answer(t_map *p_info) {
-	char	**map = p_info->lines;
-	int		i;
-	int		j;
-	t_bsq	*p_bsq;
-
-	i = 0;
-	p_bsq = malloc(sizeof(t_bsq));
-	set_bsq(p_bsq);
-	while (i < g_max)
-	{
-		j = 0;
-		while (j < g_max)
-		{
-			map[g_row + i][g_col + j] = p_info->full;
-			j++;
+// マップデータを求めた bsq に従って変更する
+void	paint_bsq(t_map *p_info, const t_square* bsq) {
+	char	**map = p_info->field_lines;
+	for (size_t i = 0; i < bsq->size; i += 1) {
+		for (size_t j = 0; j < bsq->size; j += 1) {
+			map[bsq->top + i][bsq->left + j] = p_info->full;
 		}
-		i++;
 	}
-	print_map(map, p_info);
-	free(p_bsq);
-	return ;
 }
 
 // bsq = best square を探索する
-void	run_bsq(t_map *p_info)
-{
-	t_tempcrs *p_tempcrs;
-
-	// カーソルを初期化する
-	g_max = 0;
-	g_col = 0;
-	g_row = 0;
-	p_tempcrs = malloc(sizeof(t_tempcrs));
-	init_cursor(p_tempcrs);
+void	run_bsq(t_map *p_info) {
+	// NOTE: t_cursors を使わないでもいいかも
+	t_square	bsq = {};
+	const size_t	map_width = get_map_width(p_info->field_lines);
 	// すべてのセルについて, そのセルを左上隅とする正方形の最大サイズを調べる
-	while (p_tempcrs->row <= p_info->num_rows)
-	{
-		p_tempcrs->col = 0;
-		while (p_tempcrs->col < get_map_width(p_info->lines))
-		{
-			if (cell_is_open(p_info->lines, p_tempcrs->col, p_tempcrs->row, p_info) == 1)
-			{
-				extend_square_by_cursor(p_info->lines, p_tempcrs, p_info);
+	for (size_t top = 0; top < p_info->num_rows; top += 1) {
+		for (size_t left = 0; left < map_width; left += 1) {
+			if (cell_is_open(top, left, p_info)) {
+				const t_square maximum_square = get_maximum_square(top, left, p_info);
+				if (bsq.size < maximum_square.size) {
+					bsq = maximum_square;
+				}
 			}
-			p_tempcrs->col++;
 		}
-		p_tempcrs->row++;
 	}
-	print_answer(p_info);
-	free(p_tempcrs);
-	return ;
+	paint_bsq(p_info, &bsq);
+	print_map(p_info);
 }

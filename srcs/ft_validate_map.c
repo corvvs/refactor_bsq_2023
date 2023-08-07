@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:35:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int		validate_map_top(const t_map *info) {
 
 // マップの各セルが empty, obstacle のいずれかであることを確認する
 static int		validate_map_cell_griphs(const t_map *info) {
-	char** const	map = info->lines;
+	char** const	map = info->field_lines;
 	int i;
 	int j;
 
@@ -49,10 +49,10 @@ static int		validate_map_cell_griphs(const t_map *info) {
 
 // マップの形状のバリデーション
 static int		validate_map_shape(const t_map *info) {
-	char** const	map = info->lines;
-	int i;
+	char** const	map = info->field_lines;
+	size_t			i;
 
-	i = 1;
+	i = 0;
 	// マップの各行の長さが等しいことを確認する
 	size_t	len = ft_strlen(map[i]);
 	while (map[i])
@@ -62,7 +62,7 @@ static int		validate_map_shape(const t_map *info) {
 		i++;
 	}
 	// マップの長さがヘッダ行の記述と一致することを確認する
-	if (i - 1 != info->num_rows)
+	if (i != info->num_rows)
 		return (FAIL);
 	return (SUCCESS);
 }
