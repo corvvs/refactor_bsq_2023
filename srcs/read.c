@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/07 19:33:25 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:39:53 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char*	read_content(int fd) {
 	if (content == NULL) {
 		return (NULL);
 	}
-	if (validate_content_ends_with_nl(content) == FAIL) {
+	if (!does_content_end_with_nl(content)) {
 		free(content);
 		return (NULL);
 	}
