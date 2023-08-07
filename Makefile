@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 01:37:35 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 02:21:29 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ FILES	:=	\
 			bsq_session.c\
 			read.c\
 			map.c\
-			ft_validate_map.c\
+			bsq_validator_content.c\
+			bsq_validator_lines.c\
+			bsq_validator_map.c\
 			maximum_square.c\
 			capped_buffer.c\
 			bsq_putstr.c\
 			ft_utility.c\
 			bsq_split.c\
-			ft_atoi.c\
+			bsq_number.c\
 
 SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
 OBJS	:=	$(FILES:%.c=$(OBJDIR)/%.o)

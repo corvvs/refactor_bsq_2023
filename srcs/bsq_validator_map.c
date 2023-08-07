@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:11:45 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 01:57:18 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,4 @@ bool		is_valid_map(const t_map *info) {
 	if (!is_valid_map_shape(info))
 		return (false);
 	return (true);
-}
-
-// content が改行で終了していることを確認
-bool		does_content_end_with_nl(char *content) {
-	size_t	n = ft_strlen(content);
-	return (n > 0 && content[n - 1] == '\n');
 }
