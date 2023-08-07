@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/07 23:13:13 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/07 23:41:40 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ FILES	:=	\
 			read.c\
 			map.c\
 			ft_validate_map.c\
+			maximum_square.c\
 			ft_puts.c\
 			ft_utility.c\
 			ft_strdup.c\

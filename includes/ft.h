@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 23:24:04 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 23:41:51 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ typedef	struct	s_square
 
 
 // bsq_session.c
-void	run_bsq_session(int fd);
+void		run_bsq_session(int fd);
+
+// maximum_square.c
+t_square	get_maximum_square(size_t top, size_t left, const t_map *p_info);
 
 // read.c
-char*	read_content(int fd);
+char*		read_content(int fd);
 
 // map.c
-bool	generate_map(int fd, t_map* map_ptr);
-void	destroy_map(t_map* map);
+bool		generate_map(int fd, t_map* map_ptr);
+void		destroy_map(t_map* map);
 
 // ft_validate_map
 bool			is_valid_map(const t_map *info);
