@@ -6,39 +6,71 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:35:50 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-static int	search_bsq_from_content(char* content) {
-	char**	map = bsq_split(content, '\n');
-	if (map == NULL) {
-		return (FAIL);
-	}
+// 先頭行について単体で完結するバリデーションを行う
+static int		validate_header_line(char **map) {
+	int		len;
+	char	*line;
+	int		i;
 
-	// for (int i = 0; map[i]; ++i) {
-	// 	printf("%s\n", map[i]);
-	// }
-	// printf("--\n");
-
-	if (validate_header_line(map) == FAIL) {
-		free(map);
+	if (!map[0])
 		return (FAIL);
-	}
-	t_info	info = parse_header_line(map);
-	if (validate_map(map, &info) == FAIL) {
-		free(map);
+	// 先頭行が4文字以上あることを確認する
+	line = map[0];
+	len = ft_strlen(line);
+	if (len < 4)
 		return (FAIL);
-	}
-	print_bsq(map, &info);
-	free(map);
+	// 先頭行の末尾3文字が以外がすべて数字であることを確認する
+	i = -1;
+	while (++i < len - 3)
+		if (!(line[i] >= '0' && line[i] <= '9'))
+			return (FAIL);
+	// 先頭行の末尾3文字がすべて printable であることを確認する
+	if (!(ft_is_printable(line[len - 1]) &&
+				ft_is_printable(line[len - 2]) &&
+				ft_is_printable(line[len - 3])))
+		return (FAIL);
+	// 先頭行の末尾3文字がすべて異なることを確認する
+	if (line[len - 1] == line[len - 2] ||
+			line[len - 2] == line[len - 3] ||
+			line[len - 3] == line[len - 1])
+		return (FAIL);
 	return (SUCCESS);
 }
 
-static void	search_out_bsq(int fd) {
+static int	search_out_bsq(char* content) {
+	char**	lines = bsq_split(content, '\n');
+	if (lines == NULL) {
+		return (FAIL);
+	}
+
+	// for (int i = 0; lines[i]; ++i) {
+	// 	printf("%s\n", lines[i]);
+	// }
+	// printf("--\n");
+
+	if (validate_header_line(lines) == FAIL) {
+		free(lines);
+		return (FAIL);
+	}
+	t_map	map = parse_header_line(lines);
+	if (validate_map(&map) == FAIL) {
+		free(lines);
+		return (FAIL);
+	}
+	run_bsq(&map);
+	free(map.lines);
+	return (SUCCESS);
+}
+
+static void	run_bsq_session(int fd) {
 	if (fd < 0) {
+		// fd is invalid
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}
@@ -47,7 +79,7 @@ static void	search_out_bsq(int fd) {
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}
-	if (search_bsq_from_content(content) == FAIL) {
+	if (search_out_bsq(content) == FAIL) {
 		ft_puterror(FT_ERR_MAP);
 	}
 	free(content);
@@ -56,7 +88,7 @@ static void	search_out_bsq(int fd) {
 int		main(int argc, char *argv[]) {
 	if (argc < 2) {
 		// [from stdin]
-		search_out_bsq(STDIN_FILENO);
+		run_bsq_session(STDIN_FILENO);
 		return (0);
 	}
 	// [using arguments]
@@ -65,7 +97,7 @@ int		main(int argc, char *argv[]) {
 			printf("\n");
 		}
 		int ifd = open(argv[i], O_RDONLY);
-		search_out_bsq(ifd);
+		run_bsq_session(ifd);
 		if (ifd < 0) {
 			close(ifd);
 		}

@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:14:28 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // マップ1行目の1文字目のバリデーション
 // NOTE: 必要??
-int		validate_map_top(char **map, t_info *info)
-{
+static int		validate_map_top(const t_map *info) {
+	char** const	map = info->lines;
 	// 入力文字列が少なくとも2行あることを確認する
 	if (!(map[0] && map[1]))
 		return (FAIL);
@@ -29,8 +29,8 @@ int		validate_map_top(char **map, t_info *info)
 }
 
 // マップの各セルが empty, obstacle のいずれかであることを確認する
-int		validate_map_cell_griphs(char **map, t_info *info)
-{
+static int		validate_map_cell_griphs(const t_map *info) {
+	char** const	map = info->lines;
 	int i;
 	int j;
 
@@ -48,14 +48,13 @@ int		validate_map_cell_griphs(char **map, t_info *info)
 }
 
 // マップの形状のバリデーション
-int		validate_map_shape(char **map, t_info *info)
-{
+static int		validate_map_shape(const t_map *info) {
+	char** const	map = info->lines;
 	int i;
-	int len;
 
 	i = 1;
 	// マップの各行の長さが等しいことを確認する
-	len = ft_strlen(map[i]);
+	size_t	len = ft_strlen(map[i]);
 	while (map[i])
 	{
 		if (len != ft_strlen(map[i]))
@@ -68,23 +67,21 @@ int		validate_map_shape(char **map, t_info *info)
 	return (SUCCESS);
 }
 
+// マップ = 入力ファイルの先頭行より後の部分についてのバリデーション
+int		validate_map(const t_map *info) {
+	if (validate_map_top(info) == FAIL)
+		return (FAIL);
+	if (validate_map_cell_griphs(info) == FAIL)
+		return (FAIL);
+	if (validate_map_shape(info) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
 // content が改行で終了していることを確認
-int		validate_content_ends_with_nl(char *content)
-{
+int		validate_content_ends_with_nl(char *content) {
 	size_t	n = ft_strlen(content);
 	return (n > 0 && content[n - 1] == '\n')
 		? SUCCESS
 		: FAIL;
-}
-
-// マップ = 入力ファイルの先頭行より後の部分についてのバリデーション
-int		validate_map(char **map, t_info *info)
-{
-	if (validate_map_top(map, info) == FAIL)
-		return (FAIL);
-	if (validate_map_cell_griphs(map, info) == FAIL)
-		return (FAIL);
-	if (validate_map_shape(map, info) == FAIL)
-		return (FAIL);
-	return (SUCCESS);
 }

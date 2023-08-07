@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:25:26 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_cursor(t_tempcrs *p_tempcrs)
 }
 
 // 位置 (col, row) に物が置けることを確認する
-int		cell_is_open(char **map, int col, int row, t_info *p_info)
+int		cell_is_open(char **map, int col, int row, t_map *p_info)
 {
 	// 横座標(col)がマップ横幅以内であることを確認
 	// NOTE: == ではなく >= が適切

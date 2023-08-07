@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:33:36 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern	int g_col;
 extern	int g_row;
 
 // カーソル位置で定義される正方形の右辺および下辺がすべて空白であることを確認する
-int		square_edge_is_open(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+int		square_edge_is_open(char **map, t_tempcrs *p_tempcrs, t_map *p_info)
 {
 	int i;
 
@@ -43,7 +43,7 @@ int		square_edge_is_open(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 }
 
 // カーソル位置で定義される正方形を可能な限り拡大する
-void	extend_square_by_cursor(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+void	extend_square_by_cursor(char **map, t_tempcrs *p_tempcrs, t_map *p_info)
 {
 	p_tempcrs->size = 0;
 	while (square_edge_is_open(map, p_tempcrs, p_info) == 1)
@@ -58,7 +58,7 @@ void	extend_square_by_cursor(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 	}
 }
 
-void	print_map(char **map, t_info *p_info)
+void	print_map(char **map, t_map *p_info)
 {
 	int i;
 	int j;
@@ -78,8 +78,8 @@ void	print_map(char **map, t_info *p_info)
 }
 
 // マップデータを求めた bsq に従って変更し, 出力する
-void	print_answer(char **map, t_info *p_info)
-{
+void	print_answer(t_map *p_info) {
+	char	**map = p_info->lines;
 	int		i;
 	int		j;
 	t_bsq	*p_bsq;
@@ -103,7 +103,7 @@ void	print_answer(char **map, t_info *p_info)
 }
 
 // bsq = best square を探索する
-void	print_bsq(char **map, t_info *p_info)
+void	run_bsq(t_map *p_info)
 {
 	t_tempcrs *p_tempcrs;
 
@@ -117,17 +117,17 @@ void	print_bsq(char **map, t_info *p_info)
 	while (p_tempcrs->row <= p_info->num_rows)
 	{
 		p_tempcrs->col = 0;
-		while (p_tempcrs->col < get_map_width(map))
+		while (p_tempcrs->col < get_map_width(p_info->lines))
 		{
-			if (cell_is_open(map, p_tempcrs->col, p_tempcrs->row, p_info) == 1)
+			if (cell_is_open(p_info->lines, p_tempcrs->col, p_tempcrs->row, p_info) == 1)
 			{
-				extend_square_by_cursor(map, p_tempcrs, p_info);
+				extend_square_by_cursor(p_info->lines, p_tempcrs, p_info);
 			}
 			p_tempcrs->col++;
 		}
 		p_tempcrs->row++;
 	}
-	print_answer(map, p_info);
+	print_answer(p_info);
 	free(p_tempcrs);
 	return ;
 }
