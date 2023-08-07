@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:19:03 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:14:28 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,10 @@ int		validate_map_shape(char **map, t_info *info)
 // content が改行で終了していることを確認
 int		validate_content_ends_with_nl(char *content)
 {
-	int		i;
-
-	i = 0;
-	while (content[i] != '\0')
-		i++;
-	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
+	size_t	n = ft_strlen(content);
+	return (n > 0 && content[n - 1] == '\n')
+		? SUCCESS
+		: FAIL;
 }
 
 // マップ = 入力ファイルの先頭行より後の部分についてのバリデーション

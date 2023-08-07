@@ -55,13 +55,18 @@ int		search_out_bsq(int fd)
 	if (validate_content_ends_with_nl(content) == FAIL) {
 		return (FAIL);
 	}
+	content[ft_strlen(content) - 1] = '\0'; // bsq_split で余計な空文字列を生成させないための措置
+
 	map = bsq_split(content, '\n');
 	if (map == NULL) {
 		return (FAIL);
 	}
+
 	for (int i = 0; map[i]; ++i) {
 		printf("%s\n", map[i]);
 	}
+	printf("--\n");
+
 	if (validate_header_line(map) == FAIL) {
 		return (FAIL);
 	}
