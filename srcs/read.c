@@ -6,36 +6,46 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/07 22:39:53 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 00:48:59 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
+#define FT_BUFSIZ (1u << 16)
 
 // ifd から全データを読み取り, 1つの文字列に結合して返す
-static char	*ft_read_all(int ifd)
-{
-	char	*content;
-	char	buf[FT_BUFSIZ + 1];
-	int		n;
+static char*	read_all_text(int ifd) {
+	t_capped_buffer	joined = {};
+	char			read_buffer[FT_BUFSIZ];
 
-	content = NULL;
-	while ((n = read(ifd, buf, FT_BUFSIZ)) > 0)
-	{
-		buf[n] = '\0';
-		if (content == NULL)
-			content = ft_strdup(buf);
-		else
-			content = ft_strjoin(content, buf);
+	while (true) {
+		ssize_t	read_size = read(ifd, read_buffer, sizeof(read_buffer));
+		if (read_size < 0) {
+			free(joined.buffer);
+			return (NULL);
+		} else if (read_size == 0) {
+			break ;
+		}
+		// 読み取ったデータを capped_buffer に保存する
+		if (!store_to_capped_buffer(&joined, read_buffer, read_size, sizeof(read_buffer))) {
+			free(joined.buffer);
+			return (NULL);
+		}
 	}
-	return (content);
+	// 最後に NUL を入れる
+	if (!store_to_capped_buffer(&joined, "", ft_strlen("") + 1, sizeof(read_buffer))) {
+		free(joined.buffer);
+		return (NULL);
+	}
+	return (joined.buffer);
 }
 
-char*	read_content(int fd) {
-	char*	content = ft_read_all(fd);
+char*	read_content(int ifd) {
+	char*	content = read_all_text(ifd);
 	if (content == NULL) {
 		return (NULL);
 	}
+	// content は改行(nl)で終わっていて欲しい
 	if (!does_content_end_with_nl(content)) {
 		free(content);
 		return (NULL);
