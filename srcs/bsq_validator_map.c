@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:01:22 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:10:03 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static bool		are_valid_cell_griphs(const t_map *info) {
 // マップの形状のバリデーション
 static bool		is_valid_map_shape(const t_map *info) {
 	char** const	field = info->field_lines;
+
+	if (info->num_cols == 0) {
+		DEBUGERR("width is zero: %zu", info->num_cols);
+		return (false);
+	}
 
 	for (size_t row = 0; row < info->num_rows; row += 1) {
 		if (ft_strlen(field[row]) != info->num_cols) {

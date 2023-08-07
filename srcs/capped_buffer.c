@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 02:49:31 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:19:37 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static bool	extend_capped_buffer(
 		: minimum_size;
 	char*	extended_buffer = malloc(capped_buffer->capacity);
 	if (extended_buffer == NULL) {
+		DEBUGERR("failed to extend: %zu", capped_buffer->capacity);
 		return (false);
 	}
 	ft_memcpy(extended_buffer, capped_buffer->buffer, capped_buffer->used);
@@ -43,7 +44,6 @@ bool	store_to_capped_buffer(
 	size_t minimum_size
 ) {
 	if (!extend_capped_buffer(capped_buffer, data_size, minimum_size)) {
-		DEBUGERR("failed to store: %p", capped_buffer);
 		return (false);
 	}
 	ft_memcpy(capped_buffer->buffer + capped_buffer->used, data, data_size);

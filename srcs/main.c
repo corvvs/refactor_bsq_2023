@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 02:47:33 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:04:52 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		main(int argc, char *argv[]) {
 		if (1 < i) {
 			ft_putstr_fd(STDIN_FILENO, "\n");
 		}
+		DEBUGINFO("ping session for \"%s\"", argv[i]);
 		int ifd = open(argv[i], O_RDONLY);
 		run_bsq_session(ifd);
 		if (ifd < 0) {

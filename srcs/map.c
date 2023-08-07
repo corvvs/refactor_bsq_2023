@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 02:50:41 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 03:11:48 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static char**	generate_lines(char* content) {
 		return (NULL);
 	}
 	if (!are_valid_lines(lines)) {
-		DEBUGERR("invalid lines: %s", content);
 		free(lines);
 		return (NULL);
 	}
