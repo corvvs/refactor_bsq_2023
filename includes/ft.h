@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:36:36 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 01:43:26 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define FT_ERR_MAP "map error\n"
 
 typedef struct s_capped_buffer {
-	char*	buffer;
+	void*	buffer;
 	size_t	capacity;
 	size_t	used;
 }	t_capped_buffer;
@@ -77,7 +77,7 @@ bool		is_valid_map(const t_map *info);
 bool		does_content_end_with_nl(char *content);
 
 // capped_buffer.c
-bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const char* data, size_t data_size, size_t minimum_size);
+bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const void* data, size_t data_size, size_t minimum_size);
 
 // ft_utility.c
 size_t		ft_strlen(const char *str);

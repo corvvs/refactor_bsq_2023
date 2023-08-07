@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 00:51:45 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 01:45:42 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	extend_capped_buffer(
 	capped_buffer->capacity = capped_buffer->capacity > 0
 		? capped_buffer->capacity * 2
 		: minimum_size;
-	char*	extended_buffer = malloc(sizeof(char) * capped_buffer->capacity);
+	char*	extended_buffer = malloc(capped_buffer->capacity);
 	if (extended_buffer == NULL) {
 		return (false);
 	}
@@ -38,7 +38,7 @@ static bool	extend_capped_buffer(
 // (必要に応じて capped_buffer を拡張する)
 bool	store_to_capped_buffer(
 	t_capped_buffer* capped_buffer,
-	const char* data,
+	const void* data,
 	size_t data_size,
 	size_t minimum_size
 ) {
