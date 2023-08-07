@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:14:28 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:47:36 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ int		validate_map_cell_griphs(char **map, t_info *info)
 int		validate_map_shape(char **map, t_info *info)
 {
 	int i;
-	int len;
 
 	i = 1;
 	// マップの各行の長さが等しいことを確認する
-	len = ft_strlen(map[i]);
+	size_t	len = ft_strlen(map[i]);
 	while (map[i])
 	{
 		if (len != ft_strlen(map[i]))

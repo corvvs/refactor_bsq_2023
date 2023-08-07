@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:44:48 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/29 22:46:31 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:46:16 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strlen(char *str)
-{
-	int i;
+#include "ft.h"
+
+size_t		ft_strlen(const char *str) {
+	size_t i;
 
 	i = 0;
 	while (str[i])

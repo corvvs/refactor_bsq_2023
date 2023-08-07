@@ -6,15 +6,15 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:35:50 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:47:55 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 static int	search_bsq_from_content(char* content) {
-	char**	map = bsq_split(content, '\n');
-	if (map == NULL) {
+	char**	lines = bsq_split(content, '\n');
+	if (lines == NULL) {
 		return (FAIL);
 	}
 
@@ -23,22 +23,23 @@ static int	search_bsq_from_content(char* content) {
 	// }
 	// printf("--\n");
 
-	if (validate_header_line(map) == FAIL) {
-		free(map);
+	if (validate_header_line(lines) == FAIL) {
+		free(lines);
 		return (FAIL);
 	}
-	t_info	info = parse_header_line(map);
-	if (validate_map(map, &info) == FAIL) {
-		free(map);
+	t_info	info = parse_header_line(lines);
+	if (validate_map(lines, &info) == FAIL) {
+		free(lines);
 		return (FAIL);
 	}
-	print_bsq(map, &info);
-	free(map);
+	print_bsq(lines, &info);
+	free(info.lines);
 	return (SUCCESS);
 }
 
 static void	search_out_bsq(int fd) {
 	if (fd < 0) {
+		// fd is invalid
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}

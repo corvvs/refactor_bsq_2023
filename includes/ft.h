@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:33:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:47:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,18 @@ typedef	struct	s_bsq
 
 typedef	struct	s_info
 {
+	char**	lines;
+	// ヘッダー行; フィールド行の行数と各種文字を定義する行
+	char*	header_line;
+	// フィールド行
+	char**	field_lines;
+	// ヘッダー行で定義されたフィールド行の行数
 	int		num_rows;
+	// ヘッダー行で定義された empty 文字
 	char	empty;
+	// ヘッダー行で定義された obstacle 文字
 	char	obstacle;
+	// ヘッダー行で定義された full 文字
 	char	full;
 }				t_info;
 
@@ -56,7 +65,7 @@ int				g_row;
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
-int				ft_strlen(char *str);
+size_t			ft_strlen(const char *str);
 int				ft_is_printable(char c);
 char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
