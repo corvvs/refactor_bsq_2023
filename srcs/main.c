@@ -45,39 +45,41 @@ char	*ft_read_all(int ifd)
 	return (content);
 }
 
-int		search_out_bsq(int fd)
-{
-	char	*content;	// STDIN のすべての文字列
-	char	**map;		// content を改行で区切ったもの
-	t_info	info;
-
-	content = ft_read_all(fd);
+char*	read_content(int fd) {
+	char*	content = ft_read_all(fd);
+	if (content == NULL) {
+		return (NULL);
+	}
 	if (validate_content_ends_with_nl(content) == FAIL) {
-		return (FAIL);
+		free(content);
+		return (NULL);
 	}
 	content[ft_strlen(content) - 1] = '\0'; // bsq_split で余計な空文字列を生成させないための措置
+	return (content);
+}
 
-	map = bsq_split(content, '\n');
+int	search_bsq_from_content(char* content) {
+	char**	map = bsq_split(content, '\n');
 	if (map == NULL) {
 		return (FAIL);
 	}
 
-	for (int i = 0; map[i]; ++i) {
-		printf("%s\n", map[i]);
-	}
-	printf("--\n");
+	// for (int i = 0; map[i]; ++i) {
+	// 	printf("%s\n", map[i]);
+	// }
+	// printf("--\n");
 
 	if (validate_header_line(map) == FAIL) {
+		free(map);
 		return (FAIL);
 	}
-	info = parse_header_line(map);
+	t_info	info = parse_header_line(map);
 	if (validate_map(map, &info) == FAIL) {
+		free(map);
 		return (FAIL);
 	}
 	print_bsq(map, &info);
-	// TODO: return (FAIL); 時のメモリリークを直す
 	free(map);
-	free(content);
 	return (SUCCESS);
 }
 
