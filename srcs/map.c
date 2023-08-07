@@ -6,15 +6,14 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:26:31 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:52:20 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 // 先頭行をパースして、t_info 構造体に格納する
-t_map	parse_header_line(char **lines)
-{
+t_map	parse_map(char **lines) {
 	int		len;
 	int		i;
 	char	*num;
