@@ -6,48 +6,48 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:26:10 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:41:40 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 // 先頭行について単体で完結するバリデーションを行う
-static int		validate_lines(char **lines) {
+static bool		validate_lines(char **lines) {
 	int		len;
 	char	*line;
 	int		i;
 
 	// 少なくとも2行あることを確認する
 	if (lines[0] == NULL || lines[1] == NULL)
-		return (FAIL);
+		return (false);
 	// 先頭行が4文字以上あることを確認する
 	line = lines[0];
 	len = ft_strlen(line);
 	if (len < 4)
-		return (FAIL);
+		return (false);
 	// 先頭行の末尾3文字が以外がすべて数字であることを確認する
 	i = -1;
 	while (++i < len - 3)
 		if (!(line[i] >= '0' && line[i] <= '9'))
-			return (FAIL);
+			return (false);
 	// 先頭行の末尾3文字がすべて printable であることを確認する
 	if (!(ft_is_printable(line[len - 1]) &&
 				ft_is_printable(line[len - 2]) &&
 				ft_is_printable(line[len - 3])))
-		return (FAIL);
+		return (false);
 	// 先頭行の末尾3文字がすべて異なることを確認する
 	if (line[len - 1] == line[len - 2] ||
 			line[len - 2] == line[len - 3] ||
 			line[len - 3] == line[len - 1])
-		return (FAIL);
-	return (SUCCESS);
+		return (false);
+	return (true);
 }
 
-static int	search_out_bsq(char* content) {
+static bool	search_out_bsq(char* content) {
 	char**	lines = bsq_split(content, '\n');
 	if (lines == NULL) {
-		return (FAIL);
+		return (false);
 	}
 
 	// for (int i = 0; lines[i]; ++i) {
@@ -55,18 +55,18 @@ static int	search_out_bsq(char* content) {
 	// }
 	// printf("--\n");
 
-	if (validate_lines(lines) == FAIL) {
+	if (!validate_lines(lines)) {
 		free(lines);
-		return (FAIL);
+		return (false);
 	}
 	t_map	map = parse_header_line(lines);
-	if (validate_map(&map) == FAIL) {
+	if (!is_valid_map(&map)) {
 		free(lines);
-		return (FAIL);
+		return (false);
 	}
 	run_bsq(&map);
 	free(map.lines);
-	return (SUCCESS);
+	return (true);
 }
 
 static void	run_bsq_session(int fd) {
@@ -80,7 +80,7 @@ static void	run_bsq_session(int fd) {
 		ft_puterror(FT_ERR_MAP);
 		return ;
 	}
-	if (search_out_bsq(content) == FAIL) {
+	if (!search_out_bsq(content)) {
 		ft_puterror(FT_ERR_MAP);
 	}
 	free(content);

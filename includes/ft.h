@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:26:43 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:42:55 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <libgen.h>
+# include <stdbool.h>
 
 # define FT_BUFSIZ 320000
-# define IN 1
-# define OUT 0
-# define SUCCESS 1
-# define FAIL 0
 # define FT_ERR_MAP "map error\n"
-
-typedef	struct	s_bsq
-{
-	int			x;
-	int			y;
-	int			size;
-}				t_bsq;
 
 typedef	struct	s_info
 {
@@ -62,8 +51,8 @@ typedef	struct	s_square
 char*	read_content(int fd);
 
 // ft_validate_map
-int				validate_map(const t_map *info);
-int				validate_content_ends_with_nl(char *content);
+bool			is_valid_map(const t_map *info);
+bool			does_content_end_with_nl(char *content);
 
 
 void			ft_putchar(char c);
@@ -76,7 +65,7 @@ char			*ft_strjoin(char *s1, char *s2);
 char**			bsq_split(char* str, char delimiter);
 int				ft_atoi(char *str);
 t_map			parse_header_line(char **map);
-int				cell_is_open(size_t col, size_t row, const t_map *p_info);
+bool			is_empty_cell(size_t col, size_t row, const t_map *p_info);
 void			run_bsq(t_map *p_info);
 
 #endif
