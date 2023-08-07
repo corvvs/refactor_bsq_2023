@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/07 12:00:08 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/07 19:32:50 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ OBJDIR	:=	objs
 INCDIR	:=	includes
 FILES	:=	\
 			main.c\
+			read.c\
 			ft_puts.c\
 			ft_utility.c\
 			ft_strdup.c\
