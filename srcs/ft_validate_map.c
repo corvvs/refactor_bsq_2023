@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:52:28 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // マップ1行目の1文字目のバリデーション
 // NOTE: 必要??
-static int		validate_map_top(const t_info *info) {
+static int		validate_map_top(const t_map *info) {
 	char** const	map = info->lines;
 	// 入力文字列が少なくとも2行あることを確認する
 	if (!(map[0] && map[1]))
@@ -29,7 +29,7 @@ static int		validate_map_top(const t_info *info) {
 }
 
 // マップの各セルが empty, obstacle のいずれかであることを確認する
-static int		validate_map_cell_griphs(const t_info *info) {
+static int		validate_map_cell_griphs(const t_map *info) {
 	char** const	map = info->lines;
 	int i;
 	int j;
@@ -48,7 +48,7 @@ static int		validate_map_cell_griphs(const t_info *info) {
 }
 
 // マップの形状のバリデーション
-static int		validate_map_shape(const t_info *info) {
+static int		validate_map_shape(const t_map *info) {
 	char** const	map = info->lines;
 	int i;
 
@@ -68,7 +68,7 @@ static int		validate_map_shape(const t_info *info) {
 }
 
 // マップ = 入力ファイルの先頭行より後の部分についてのバリデーション
-int		validate_map(const t_info *info) {
+int		validate_map(const t_map *info) {
 	if (validate_map_top(info) == FAIL)
 		return (FAIL);
 	if (validate_map_cell_griphs(info) == FAIL)

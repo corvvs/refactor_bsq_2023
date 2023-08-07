@@ -6,14 +6,14 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:54:43 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 // 先頭行をパースして、t_info 構造体に格納する
-t_info	parse_header_line(char **lines)
+t_map	parse_header_line(char **lines)
 {
 	int		len;
 	int		i;
@@ -29,7 +29,7 @@ t_info	parse_header_line(char **lines)
 	num[i] = '\0';
 	int num_rows = ft_atoi(num);
 	free(num);
-	return (t_info){
+	return (t_map){
 		.lines			= lines,
 		.header_line	= header_line,
 		.field_lines	= lines + 1,

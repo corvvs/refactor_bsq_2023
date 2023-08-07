@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:58:08 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:59:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	search_out_bsq(char* content) {
 		free(lines);
 		return (FAIL);
 	}
-	t_info	map = parse_header_line(lines);
+	t_map	map = parse_header_line(lines);
 	if (validate_map(&map) == FAIL) {
 		free(lines);
 		return (FAIL);
