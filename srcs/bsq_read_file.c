@@ -6,17 +6,17 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 19:20:01 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:45:25 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
-#define FT_BUFSIZ (1u << 16)
+#define READ_BUFFER_SIZE (1u << 16)
 
 // ifd から全データを読み取り, 1つの文字列に結合して返す
 static char*	read_all_text(int ifd) {
 	t_elastic_buffer	joined = {};
-	char			read_buffer[FT_BUFSIZ];
+	char			read_buffer[READ_BUFFER_SIZE];
 
 	while (true) {
 		ssize_t	read_size = read(ifd, read_buffer, sizeof(read_buffer));
@@ -34,7 +34,7 @@ static char*	read_all_text(int ifd) {
 		}
 	}
 	// 最後に NUL を入れる
-	if (!store_to_elastic_buffer(&joined, "", ft_strlen("") + 1, sizeof(read_buffer))) {
+	if (!store_to_elastic_buffer(&joined, "", 1, sizeof(read_buffer))) {
 		free(joined.buffer);
 		return (NULL);
 	}
@@ -46,12 +46,13 @@ char*	bsq_read_file(int ifd) {
 	if (content == NULL) {
 		return (NULL);
 	}
-	// content は改行(nl)で終わっていて欲しいので, それを確認する
+	// content は改行(nl)で終わっている必要があるので, それを確認する
 	if (!is_nl_ended_content(content)) {
 		free(content);
 		return (NULL);
 	}
 	content[ft_strlen(content) - 1] = '\0';
 	// NOTE: bsq_split で余計な空文字列を生成させないための措置
+	// NOTE: content が改行で終わっているので, ft_strlen(content) >= 1 が保証される
 	return (content);
 }

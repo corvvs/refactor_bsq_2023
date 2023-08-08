@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 19:20:01 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 19:41:33 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,14 +57,14 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:	up
+.PHONY:		up
 up:
 	docker-compose up --build -d
 
-.PHONY:	down
+.PHONY:		down
 down:
 	docker-compose down
 
-.PHONY:	it
+.PHONY:		it
 it:
 	docker-compose exec app bash
