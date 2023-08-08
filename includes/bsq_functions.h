@@ -17,7 +17,7 @@
 #include "bsq_structure.h"
 
 // bsq_run_session.c
-void		bsq_run_session(int fd);
+bool		bsq_run_session(int fd);
 
 // bsq_map.c
 bool		bsq_generate_map(int fd, t_map *map_ptr);
