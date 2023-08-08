@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 15:09:52 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 15:11:46 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static bool		is_expected_row_number(const t_map *map) {
 	}
 	if (actual_num_rows != map->num_rows) {
 		DEBUGERR(
-			"invalid number of rows: expected: %zu actual: %zu",
-			map->num_rows, actual_num_rows);
+			"unexpected row number: expected: %zu actual: %zu",
+			map->num_rows, actual_num_rows
+		);
 		return (false);
 	}
 	return (true);
