@@ -6,13 +6,13 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 13:43:28 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 19:10:53 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror -Iincludes\
-			-g -fsanitize=address\
+			-g -fsanitize=address -fsanitize=undefined\
 			-D DEBUG\
 
 SRCDIR	:=	srcs
@@ -56,3 +56,15 @@ fclean:		clean
 	-rm -f $(TARGET)
 
 re:			fclean all
+
+.PHONY:	up
+up:
+	docker-compose up --build -d
+
+.PHONY:	down
+down:
+	docker-compose down
+
+.PHONY:	it
+it:
+	docker-compose exec app bash
