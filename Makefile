@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 02:47:27 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 11:18:42 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,18 +17,18 @@ OBJDIR	:=	objs
 INCDIR	:=	includes
 FILES	:=	\
 			main.c\
-			bsq_session.c\
-			read.c\
-			map.c\
-			bsq_validator_content.c\
-			bsq_validator_lines.c\
-			bsq_validator_map.c\
-			maximum_square.c\
-			capped_buffer.c\
-			bsq_putstr.c\
-			ft_utility.c\
+			bsq_run_session.c\
+			bsq_map.c\
+			bsq_read_file.c\
+			bsq_validators_content.c\
+			bsq_validators_lines.c\
+			bsq_validators_map.c\
+			bsq_get_maximum_square.c\
 			bsq_split.c\
-			bsq_number.c\
+			capped_buffer.c\
+			utils_misc.c\
+			utils_put.c\
+			utils_number.c\
 
 SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
 OBJS	:=	$(FILES:%.c=$(OBJDIR)/%.o)

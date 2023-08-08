@@ -6,11 +6,11 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:46:11 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 // splitted にアドレス word_start を追加する
 // (必要に応じて splitted を拡張する)

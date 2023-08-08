@@ -6,16 +6,16 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:04:52 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 int		main(int argc, char *argv[]) {
 	if (argc < 2) {
 		// [from stdin]
-		run_bsq_session(STDIN_FILENO);
+		bsq_run_session(STDIN_FILENO);
 		return (0);
 	}
 	// [using arguments]
@@ -25,7 +25,7 @@ int		main(int argc, char *argv[]) {
 		}
 		DEBUGINFO("ping session for \"%s\"", argv[i]);
 		int ifd = open(argv[i], O_RDONLY);
-		run_bsq_session(ifd);
+		bsq_run_session(ifd);
 		if (ifd < 0) {
 			close(ifd);
 		}

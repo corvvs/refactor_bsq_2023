@@ -6,11 +6,11 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 11:00:23 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 // 要求サイズ増分に対して必要なら capped_buffer を拡張する
 static bool	extend_capped_buffer(

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_validator_map.c                                :+:      :+:    :+:   */
+/*   bsq_validators_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 10:59:42 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 // マップの各セルが empty, obstacle のいずれかであることを確認する
 static bool		are_valid_cell_letters(const t_map *info) {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maximum_square.c                                   :+:      :+:    :+:   */
+/*   bsq_get_maximum_square.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:02:55 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 // 位置 (row, col) に物が置けることを確認する
 static bool		is_empty_cell(size_t row, size_t col, const t_map* map) {
@@ -50,7 +50,7 @@ static bool		is_extendible_square(const t_square* square, const t_map* map) {
 }
 
 // (top, left) を左上隅とする最大の正方形を返す
-t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
+t_square	bsq_get_maximum_square(size_t top, size_t left, const t_map* map) {
 	t_square	square = {
 		.top = top,
 		.left = left,

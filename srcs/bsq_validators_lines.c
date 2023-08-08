@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_validator_lines.c                              :+:      :+:    :+:   */
+/*   bsq_validators_lines.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 11:00:01 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 static bool	has_least_2_lines(char** const lines) {
 	if (lines[0] == NULL || lines[1] == NULL) {
@@ -64,7 +64,7 @@ bool		are_valid_lines(char** const lines) {
 	const size_t	header_len = ft_strlen(header_line);
 	const size_t	rows_len = header_len - N_LETTER_TYPES;
 	// 先頭行の末尾から3文字目までが uint64_t としてパースできることを確認する
-	if (!bsq_str_to_u64(header_line, rows_len, NULL)) {
+	if (!str_to_u64(header_line, rows_len, NULL)) {
 		return (false);
 	}
 	const char*	letters = header_line + rows_len;

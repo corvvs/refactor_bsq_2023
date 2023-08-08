@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   bsq_read_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 08:29:45 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 #define FT_BUFSIZ (1u << 16)
 
 // ifd から全データを読み取り, 1つの文字列に結合して返す
@@ -41,7 +41,7 @@ static char*	read_all_text(int ifd) {
 	return (joined.buffer);
 }
 
-char*	read_content(int ifd) {
+char*	bsq_read_file(int ifd) {
 	char*	content = read_all_text(ifd);
 	if (content == NULL) {
 		return (NULL);
