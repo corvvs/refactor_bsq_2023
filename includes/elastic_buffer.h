@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   capped_buffer.h                                    :+:      :+:    :+:   */
+/*   elastic_buffer.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,13 +14,13 @@
 #define CAPPED_BUFFER_H
 #include <stdlib.h>
 
-typedef struct	s_capped_buffer {
+typedef struct	s_elastic_buffer {
 	void*	buffer;
 	size_t	capacity;
 	size_t	used;
-}				t_capped_buffer;
+}				t_elastic_buffer;
 
-// capped_buffer.c
-bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const void *data, size_t data_size, size_t minimum_size);
+// elastic_buffer.c
+bool		store_to_elastic_buffer(t_elastic_buffer* elastic_buffer, const void *data, size_t data_size, size_t minimum_size);
 
 #endif

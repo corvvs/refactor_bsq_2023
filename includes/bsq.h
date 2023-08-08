@@ -16,7 +16,7 @@
 #include "bsq_common.h"
 #include "bsq_structure.h"
 #include "bsq_functions.h"
-#include "capped_buffer.h"
+#include "elastic_buffer.h"
 #include "debugout.h"
 
 #endif
