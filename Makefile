@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 11:18:42 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 11:23:07 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ FILES	:=	\
 			bsq_validators_map.c\
 			bsq_get_maximum_square.c\
 			bsq_split.c\
-			capped_buffer.c\
 			utils_misc.c\
 			utils_put.c\
 			utils_number.c\
+			capped_buffer.c\
 
 SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
 OBJS	:=	$(FILES:%.c=$(OBJDIR)/%.o)

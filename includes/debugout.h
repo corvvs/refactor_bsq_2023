@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef DEBUGOUT_H
+#define DEBUGOUT_H
 
 // [デバッグ用出力]
 
