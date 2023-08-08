@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 08:29:45 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:59:50 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool		is_nl_ended_content(char *content) {
 		return (false);
 	}
 	if (content[n - 1] != '\n') {
-		DEBUGERR("content does not end with nl: %c", content[n - 1]);
+		DEBUGERR("does not end with nl: %c", content[n - 1]);
 		return (false);
 	}
 	return (true);
