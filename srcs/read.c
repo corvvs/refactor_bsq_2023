@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 02:49:21 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 08:29:45 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char*	read_content(int ifd) {
 		return (NULL);
 	}
 	// content は改行(nl)で終わっていて欲しい
-	if (!is_nul_terminated_content(content)) {
+	if (!is_nl_ended_content(content)) {
 		free(content);
 		return (NULL);
 	}

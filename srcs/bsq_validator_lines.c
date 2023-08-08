@@ -6,13 +6,11 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 02:43:47 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:34:52 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-#define N_GRIPHS 3
 
 static bool	has_least_2_lines(char** const lines) {
 	return (lines[0] != NULL && lines[1] != NULL);
@@ -51,26 +49,26 @@ bool		are_valid_lines(char** const lines) {
 	}
 	const char*		header_line = lines[0];
 	// 先頭行が4文字以上あることを確認する
-	if (!is_enough_long_header_line(header_line, N_GRIPHS + 1)) {
+	if (!is_enough_long_header_line(header_line, N_LETTERS + 1)) {
 		DEBUGERR("header_line: too short %s", header_line);
 		return (false);
 	}
 	const size_t	header_len = ft_strlen(header_line);
-	const size_t	rows_len = header_len - N_GRIPHS;
+	const size_t	rows_len = header_len - N_LETTERS;
 	// 先頭行の末尾から3文字目までが uint64_t としてパースできることを確認する
 	if (!bsq_str_to_u64(header_line, rows_len, NULL)) {
 		DEBUGERR("header_line: invalid rows %s", header_line);
 		return (false);
 	}
-	const char*	griphs = header_line + rows_len;
+	const char*	letters = header_line + rows_len;
 	// 先頭行の末尾3文字がすべて printable であることを確認する
-	if (!is_printable_str(griphs)) {
-		DEBUGERR("header_line: invalid griphs %s", griphs);
+	if (!is_printable_str(letters)) {
+		DEBUGERR("header_line: invalid letters %s", letters);
 		return (false);
 	}
 	// 先頭行の末尾3文字がすべて異なることを確認する
-	if (!is_unique_str(griphs)) {
-		DEBUGERR("header_line: duplicate griphs %s", griphs);
+	if (!is_unique_str(letters)) {
+		DEBUGERR("header_line: duplicate letters %s", letters);
 		return (false);
 	}
 	return (true);
