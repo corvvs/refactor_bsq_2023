@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_get_maximum_square.c                           :+:      :+:    :+:   */
+/*   bsq_find_out_bsq.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 19:24:50 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:52:10 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static bool		is_extendible_square(const t_square* square, const t_map* map) {
 }
 
 // (top, left) を左上隅とする最大の正方形を返す
-t_square	bsq_get_maximum_square(size_t top, size_t left, const t_map* map) {
+static t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
 	t_square	square = {
 		.top	= top,
 		.left	= left,
@@ -64,4 +64,21 @@ t_square	bsq_get_maximum_square(size_t top, size_t left, const t_map* map) {
 		square.size += 1;
 	}
 	return (square);
+}
+
+// フィールド中に作成可能な最大の正方形を返す
+t_square	bsq_find_out_bsq(const t_map* map) {
+	t_square	bsq = { .size = 0 };
+
+	for (size_t top = 0; top < map->field_height; top += 1) {
+		for (size_t left = 0; left < map->field_width; left += 1) {
+			const t_square maximum_square = get_maximum_square(top, left, map);
+			if (bsq.size < maximum_square.size) {
+				bsq = maximum_square;
+			}
+		}
+	}
+
+	DEBUGOUT("best_square: (%zu, %zu), size: %zu", bsq.top, bsq.left, bsq.size);
+	return (bsq);
 }

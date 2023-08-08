@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 19:31:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:53:16 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static bool		are_valid_cell_letters(const t_map *map) {
 	return (true);
 }
 
+// マップ構造体の内容が正しいかどうかを確認する
 bool		is_valid_map(const t_map *map) {
 	// フィールドの行数がヘッダの定義と一致することを確認する
 	if (!is_expected_field_height(map)) {

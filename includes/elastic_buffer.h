@@ -14,6 +14,8 @@
 #define CAPPED_BUFFER_H
 #include <stdlib.h>
 
+// [elastic_buffer]
+// 必要に応じてサイズが伸長するバッファ
 typedef struct	s_elastic_buffer {
 	void*	buffer;
 	size_t	capacity;

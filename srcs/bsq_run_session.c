@@ -6,27 +6,11 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 23:46:49 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:38:53 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
-
-static t_square	find_out_bsq(const t_map* map) {
-	t_square	bsq = { .size = 0 };
-
-	for (size_t top = 0; top < map->field_height; top += 1) {
-		for (size_t left = 0; left < map->field_width; left += 1) {
-			const t_square maximum_square = bsq_get_maximum_square(top, left, map);
-			if (bsq.size < maximum_square.size) {
-				bsq = maximum_square;
-			}
-		}
-	}
-
-	DEBUGOUT("best_square: (%zu, %zu), size: %zu", bsq.top, bsq.left, bsq.size);
-	return (bsq);
-}
 
 static void	fill_out_bsq(t_map* map, const t_square* bsq) {
 	char**	field = map->field_lines;
@@ -47,13 +31,14 @@ static void	print_map(const t_map* map) {
 	}
 }
 
+// 与えられた fd に対してBSQセッションを実行する
 bool	bsq_run_session(int ifd) {
 	t_map	map;
 
 	if (!bsq_generate_map(ifd, &map)) {
 		return (false);
 	}
-	const t_square	best_square = find_out_bsq(&map);
+	const t_square	best_square = bsq_find_out_bsq(&map);
 	if (best_square.size == 0) {
 		DEBUGERR("%s", "no square found");
 		bsq_destroy_map(&map);

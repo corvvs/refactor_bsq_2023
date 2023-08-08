@@ -6,13 +6,13 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:53:26 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-// content が改行で終了していることを確認
+// content が改行で終了していることを確認する
 bool		is_nl_ended_content(char *content) {
 	size_t	n = ft_strlen(content);
 	if (n == 0) {

@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 19:45:25 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:53:00 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // ifd から全データを読み取り, 1つの文字列に結合して返す
 static char*	read_all_text(int ifd) {
 	t_elastic_buffer	joined = {};
-	char			read_buffer[READ_BUFFER_SIZE];
+	char				read_buffer[READ_BUFFER_SIZE];
 
 	while (true) {
 		ssize_t	read_size = read(ifd, read_buffer, sizeof(read_buffer));
@@ -41,6 +41,7 @@ static char*	read_all_text(int ifd) {
 	return (joined.buffer);
 }
 
+// 与えられた fd からデータを読み取り, 1つの文字列として返す.
 char*	bsq_read_file(int ifd) {
 	char*	content = read_all_text(ifd);
 	if (content == NULL) {
