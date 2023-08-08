@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 15:33:41 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:24:50 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static bool		is_empty_cell(size_t row, size_t col, const t_map* map) {
 	char** const	field = map->field_lines;
 
 	// 横座標(col)がマップ横幅以内であることを確認
-	if (col >= map->num_cols) {
+	if (col >= map->field_width) {
 		return (false);
 	}
 	// 縦座標(row)がマップ縦幅以内であることを確認
-	if (row >= map->num_rows) {
+	if (row >= map->field_height) {
 		return (false);
 	}
 	// 座標 (top, left) に物が置けることを確認

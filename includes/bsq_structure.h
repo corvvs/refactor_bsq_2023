@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:32:34 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:33:15 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,22 @@ typedef struct	s_map {
 	t_basedata	basedata;
 	// フィールド行; 一番上の行(ヘッダー行)以降の行
 	char**		field_lines;
-	// ヘッダー行で定義されたフィールド行の行数
-	size_t		num_rows;
+	// フィールド行の行数
+	size_t		field_height;
 	// フィールド行の列数
-	size_t		num_cols;
+	size_t		field_width;
+
+	// フィールド文字; フィールドの記述に使われる文字
 	union {
+		// 配列記述されたフィールド文字種
+		char	letter_array[N_LETTER_TYPES];
+
+		// 構造化されたフィールド文字種
 		struct	s_chars {
-			// ヘッダー行で定義された empty 文字
 			char	empty;
-			// ヘッダー行で定義された obstacle 文字
 			char	obstacle;
-			// ヘッダー行で定義された full 文字
 			char	full;
 		}		letter;
-		char	letter_array[N_LETTER_TYPES];
 	};
 }				t_map;
 
