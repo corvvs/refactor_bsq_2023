@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_put.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
+/*   Created: 2020/01/29 22:46:13 by louisnop          #+#    #+#             */
 /*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-int		main(int argc, char *argv[]) {
-	if (argc < 2) {
-		// [from stdin]
-		bsq_run_session(STDIN_FILENO);
-		return (0);
+void	ft_putstr_fd(int fd, const char *str) {
+	ft_putnstr_fd(fd, str, SIZE_MAX);
+}
+
+void	ft_putnstr_fd(int fd, const char *str, size_t max_len) {
+	const size_t	batch_len = 1024;
+	size_t			len = ft_strlen(str);
+	if (len > max_len) {
+		len = max_len;
 	}
-	// [using arguments]
-	for (int i = 1; i < argc; ++i) {
-		if (1 < i) {
-			ft_putstr_fd(STDIN_FILENO, "\n");
-		}
-		DEBUGINFO("ping session for \"%s\"", argv[i]);
-		int ifd = open(argv[i], O_RDONLY);
-		bsq_run_session(ifd);
-		if (ifd < 0) {
-			close(ifd);
-		}
+	while (len >= batch_len) {
+		write(fd, str, batch_len);
+		str += batch_len;
+		len -= batch_len;
 	}
-	return (0);
+	if (len > 0) {
+		write(fd, str, len);
+	}
 }

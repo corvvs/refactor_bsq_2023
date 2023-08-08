@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_putstr.c                                       :+:      :+:    :+:   */
+/*   bsq_validators_content.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 22:46:13 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 01:38:50 by corvvs           ###   ########.fr       */
+/*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
-void	ft_putstr_fd(int fd, const char *str) {
-	ft_putnstr_fd(fd, str, SIZE_MAX);
-}
-
-void	ft_putnstr_fd(int fd, const char *str, size_t max_len) {
-	const size_t	batch_len = 1024;
-	size_t			len = ft_strlen(str);
-	if (len > max_len) {
-		len = max_len;
+// content が改行で終了していることを確認
+bool		is_nl_ended_content(char *content) {
+	size_t	n = ft_strlen(content);
+	if (n == 0) {
+		DEBUGERR("%s", "empty content");
+		return (false);
 	}
-	while (len >= batch_len) {
-		write(fd, str, batch_len);
-		str += batch_len;
-		len -= batch_len;
+	if (content[n - 1] != '\n') {
+		DEBUGERR("does not end with nl: %c", content[n - 1]);
+		return (false);
 	}
-	if (len > 0) {
-		write(fd, str, len);
-	}
+	return (true);
 }

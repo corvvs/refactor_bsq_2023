@@ -6,48 +6,53 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 02:47:27 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/08 13:43:28 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		:= gcc
-CFLAGS	:= -Wall -Wextra -Werror -Iincludes -fsanitize=address -g -D DEBUG
+CC		:=	cc
+CFLAGS	:=	-Wall -Wextra -Werror -Iincludes\
+			-g -fsanitize=address\
+			-D DEBUG\
+
 SRCDIR	:=	srcs
 OBJDIR	:=	objs
 INCDIR	:=	includes
-FILES	:=	\
-			main.c\
-			bsq_session.c\
-			read.c\
-			map.c\
-			bsq_validator_content.c\
-			bsq_validator_lines.c\
-			bsq_validator_map.c\
-			maximum_square.c\
-			capped_buffer.c\
-			bsq_putstr.c\
-			ft_utility.c\
+
+FILES	:=	main.c\
+			bsq_run_session.c\
+			bsq_map.c\
+			bsq_read_file.c\
+			bsq_validators_content.c\
+			bsq_validators_lines.c\
+			bsq_validators_map.c\
+			bsq_get_maximum_square.c\
 			bsq_split.c\
-			bsq_number.c\
+			utils_number.c\
+			utils_put.c\
+			utils_misc.c\
+			capped_buffer.c\
 
 SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
 OBJS	:=	$(FILES:%.c=$(OBJDIR)/%.o)
-TARGET	:= bsq
 
-all: $(TARGET)
+NAME	:=	bsq
 
-$(TARGET): $(OBJS)
+
+all:		$(NAME)
+
+$(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: all clean re
+.PHONY:		all clean re
 clean:
 	-rm -f $(OBJS)
 
-fclean:
-	-rm -f $(TARGET) $(OBJS)
+fclean:		clean
+	-rm -f $(TARGET)
 
-re: fclean all
+re:			fclean all

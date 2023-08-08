@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_number.c                                       :+:      :+:    :+:   */
+/*   utils_number.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 18:51:43 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:00:15 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 static bool	is_number(char c) {
 	return ('0' <= c && c <= '9');
@@ -20,7 +20,7 @@ static bool will_overflow(uint64_t n, uint64_t digit) {
 	return (n > UINT64_MAX / 10 || digit > UINT64_MAX - n * 10);
 }
 
-bool	bsq_str_to_u64(const char *str, size_t max_len, uint64_t *result) {
+bool	str_to_u64(const char *str, size_t max_len, uint64_t *result) {
 	uint64_t	n = 0;
 	for (size_t i = 0; str[i] && i < max_len; i += 1) {
 		if (!is_number(str[i])) {
