@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 13:50:14 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:20:01 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // splitted にアドレス word_start を追加する
 // (必要に応じて splitted を拡張する)
-static bool	append_pointer(t_capped_buffer* splitted, char* word_start) {
-	return (store_to_capped_buffer(splitted, &word_start, sizeof(char*), sizeof(char*) * 2));
+static bool	append_pointer(t_elastic_buffer* splitted, char* word_start) {
+	return (store_to_elastic_buffer(splitted, &word_start, sizeof(char*), sizeof(char*) * 2));
 }
 
 // str を delimiterで区切った文字列の配列を返す.
@@ -30,7 +30,7 @@ char**	bsq_split(char* str, char delimiter) {
 	// ただし見つかったのが delimiter の場合そのままだと単語が終了しないため,
 	// delimiter を NUL で上書きする.
 
-	t_capped_buffer	splitted = {};
+	t_elastic_buffer	splitted = {};
 	size_t			word_start = 0;
 	for (size_t i = 0; ; i += 1) {
 		if (str[i] != delimiter && str[i] != '\0') {

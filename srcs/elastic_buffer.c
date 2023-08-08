@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   capped_buffer.c                                    :+:      :+:    :+:   */
+/*   elastic_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,41 @@
 
 #include "bsq.h"
 
-// 要求サイズ増分に対して必要なら capped_buffer を拡張する
-static bool	extend_capped_buffer(
-	t_capped_buffer* capped_buffer,
+// 要求サイズ増分に対して必要なら elastic_buffer を拡張する
+static bool	extend_elastic_buffer(
+	t_elastic_buffer* elastic_buffer,
 	size_t required_more,
 	size_t minimum_size
 ) {
-	if (capped_buffer->capacity >= capped_buffer->used + required_more) {
+	if (elastic_buffer->capacity >= elastic_buffer->used + required_more) {
 		return (true);
 	}
-	capped_buffer->capacity = capped_buffer->capacity > 0
-		? capped_buffer->capacity * 2
+	elastic_buffer->capacity = elastic_buffer->capacity > 0
+		? elastic_buffer->capacity * 2
 		: minimum_size;
-	char*	extended_buffer = malloc(capped_buffer->capacity);
+	char*	extended_buffer = malloc(elastic_buffer->capacity);
 	if (extended_buffer == NULL) {
-		DEBUGERR("failed to extend: %zu", capped_buffer->capacity);
+		DEBUGERR("failed to extend: %zu", elastic_buffer->capacity);
 		return (false);
 	}
-	ft_memcpy(extended_buffer, capped_buffer->buffer, capped_buffer->used);
-	free(capped_buffer->buffer);
-	capped_buffer->buffer = extended_buffer;
+	ft_memcpy(extended_buffer, elastic_buffer->buffer, elastic_buffer->used);
+	free(elastic_buffer->buffer);
+	elastic_buffer->buffer = extended_buffer;
 	return (true);
 }
 
-// capped_buffer にデータを保存する
-// (必要に応じて capped_buffer を拡張する)
-bool	store_to_capped_buffer(
-	t_capped_buffer* capped_buffer,
+// elastic_buffer にデータを保存する
+// (必要に応じて elastic_buffer を拡張する)
+bool	store_to_elastic_buffer(
+	t_elastic_buffer* elastic_buffer,
 	const void* data,
 	size_t data_size,
 	size_t minimum_size
 ) {
-	if (!extend_capped_buffer(capped_buffer, data_size, minimum_size)) {
+	if (!extend_elastic_buffer(elastic_buffer, data_size, minimum_size)) {
 		return (false);
 	}
-	ft_memcpy(capped_buffer->buffer + capped_buffer->used, data, data_size);
-	capped_buffer->used += data_size;
+	ft_memcpy(elastic_buffer->buffer + elastic_buffer->used, data, data_size);
+	elastic_buffer->used += data_size;
 	return true;
 }
