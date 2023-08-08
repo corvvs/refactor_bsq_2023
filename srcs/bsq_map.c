@@ -6,14 +6,14 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 19:27:31 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:46:27 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-// 先頭行をパースして, t_map 構造体を生成する
-static t_map	parse_map(char* content, char** lines) {
+// 入力行をパースして, t_map 構造体を生成する
+static t_map	parse_lines_into_map(char* content, char** lines) {
 	const char*		header_line = lines[0];
 	const size_t	len_rows = ft_strlen(header_line) - N_LETTER_TYPES;
 	// ASSUMPTION: header_line の長さが N_LETTER_TYPES より大きいこと
@@ -62,7 +62,7 @@ bool	bsq_generate_map(int fd, t_map* map_ptr) {
 		free(content);
 		return (false);
 	}
-	t_map	map = parse_map(content, lines);
+	t_map	map = parse_lines_into_map(content, lines);
 	if (!is_valid_map(&map)) {
 		bsq_destroy_map(&map);
 		return (false);
