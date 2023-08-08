@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 13:08:21 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:32:53 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool		are_valid_lines(char** const lines) {
 	const char*		header_line = lines[0];
 	// 先頭行が
 	// - フィールド行数
-	// - 使用文字種
+	// - フィールド文字種
 	// を保持するために十分長いことを確認する
 	if (!is_enough_long_header_line(header_line, N_LETTER_TYPES + 1)) {
 		return (false);
@@ -71,11 +71,11 @@ bool		are_valid_lines(char** const lines) {
 		return (false);
 	}
 	const char*	letters = header_line + rows_len;
-	// 使用文字がすべて printable であることを確認する
+	// フィールド文字がすべて printable であることを確認する
 	if (!is_printable_str(letters)) {
 		return (false);
 	}
-	// 使用文字がすべて異なることを確認する
+	// フィールド文字がすべて異なることを確認する
 	if (!is_unique_str(letters)) {
 		return (false);
 	}
