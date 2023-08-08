@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 19:20:01 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 23:50:51 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char**	bsq_split(char* str, char delimiter) {
 	// delimiter を NUL で上書きする.
 
 	t_elastic_buffer	splitted = {};
-	size_t			word_start = 0;
+	size_t				word_start = 0;
 	for (size_t i = 0; ; i += 1) {
 		if (str[i] != delimiter && str[i] != '\0') {
 			continue;

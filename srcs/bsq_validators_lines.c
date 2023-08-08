@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:32:57 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/08 19:32:53 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 00:19:30 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool		are_valid_lines(char** const lines) {
 	if (!str_to_u64(header_line, rows_len, NULL)) {
 		return (false);
 	}
-	const char*	letters = header_line + rows_len;
+	const char*		letters = header_line + rows_len;
 	// フィールド文字がすべて printable であることを確認する
 	if (!is_printable_str(letters)) {
 		return (false);

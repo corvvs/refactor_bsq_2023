@@ -35,8 +35,8 @@ bool		are_valid_lines(char** const lines);
 // bsq_validators_map.c
 bool		is_valid_map(const t_map *map);
 
-// bsq_get_maximum_square.c
-t_square	bsq_get_maximum_square(size_t top, size_t left, const t_map* map);
+// bsq_find_out_bsq.c
+t_square	bsq_find_out_bsq(const t_map* map);
 
 // bsq_split.c
 char**		bsq_split(char* str, char delimiter);

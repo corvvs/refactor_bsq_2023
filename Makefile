@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 19:41:33 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/09 00:39:36 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES	:=	main.c\
 			bsq_validators_content.c\
 			bsq_validators_lines.c\
 			bsq_validators_map.c\
-			bsq_get_maximum_square.c\
+			bsq_find_out_bsq.c\
 			bsq_split.c\
 			utils_number.c\
 			utils_put.c\
