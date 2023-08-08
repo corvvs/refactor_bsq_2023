@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 18:51:43 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:10:33 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	str_to_u64(const char *str, size_t max_len, uint64_t *result) {
 		uint64_t	digit = str[i] - '0';
 		// オーバーフローチェック
 		if (will_overflow(n, digit)) {
-			DEBUGERR("overflow: %llu, %llu", n, digit);
+			DEBUGERR("overflow: " U64T ", " U64T, n, digit);
 			return (false);
 		}
 		n = n * 10 + digit;

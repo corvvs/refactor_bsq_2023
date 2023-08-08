@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 13:29:26 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:10:20 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,11 @@
 
 #define N_LETTER_TYPES		3
 #define BSQ_ERROR_MESSAGE	"map error\n"
+
+#ifdef __APPLE__
+#define U64T "%llu"
+#else
+#define U64T "%lu"
+#endif
 
 #endif
