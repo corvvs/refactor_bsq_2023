@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 10:42:53 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:50:43 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "common.h"
 
 # define FT_ERR_MAP "map error\n"
-# define N_LETTERS 3
+# define N_LETTER_TYPES 3
 
 typedef struct	s_capped_buffer {
 	void*	buffer;
@@ -36,9 +36,7 @@ typedef struct	s_basedata {
 
 typedef	struct	s_map {
 	t_basedata	basedata;
-	// ヘッダー行; フィールド行の行数と各種文字を定義する行
-	char*	header_line;
-	// フィールド行
+	// フィールド行; 一番上の行(ヘッダー行)以降の行
 	char**	field_lines;
 	// ヘッダー行で定義されたフィールド行の行数
 	size_t	num_rows;
@@ -53,7 +51,7 @@ typedef	struct	s_map {
 			// ヘッダー行で定義された full 文字
 			char	full;
 		}		letter;
-		char	letter_array[N_LETTERS];
+		char	letter_array[N_LETTER_TYPES];
 	};
 }				t_map;
 

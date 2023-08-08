@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 10:45:05 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:59:42 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ static bool		is_valid_map_shape(const t_map *info) {
 	}
 
 	for (size_t row = 0; row < info->num_rows; row += 1) {
-		if (ft_strlen(field[row]) != info->num_cols) {
-			DEBUGERR("invalid row size: %zu at line %zu", ft_strlen(field[row]), row);
+		const size_t	row_size = ft_strlen(field[row]);
+		if (row_size != info->num_cols) {
+			DEBUGERR("invalid row size: %zu at line %zu", row_size, row);
 			return (false);
 		}
 	}

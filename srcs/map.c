@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 10:39:20 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:00:37 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,27 @@
 
 // 先頭行をパースして、t_info 構造体に格納する
 static t_map	parse_map(char* content, char** lines) {
-	char*			header_line = lines[0];
-	const size_t	len = ft_strlen(header_line);
+	const char*		header_line = lines[0];
+	const size_t	len_rows = ft_strlen(header_line) - N_LETTER_TYPES;
 	uint64_t 		num_rows;
-	bsq_str_to_u64(header_line, len - N_LETTERS, &num_rows);
+	bsq_str_to_u64(header_line, len_rows, &num_rows);
 
 	t_map	map = {
 		.basedata		= {
 			.content	= content,
 			.lines		= lines,
 		},
-		.header_line	= header_line,
 		.field_lines	= lines + 1,
 		.num_rows		= num_rows,
 		.num_cols		= ft_strlen(lines[1]),
 	};
-	ft_memcpy(map.letter_array, header_line + len - N_LETTERS, N_LETTERS);
+	ft_memcpy(map.letter_array, header_line + len_rows, N_LETTER_TYPES);
 	return (map);
 }
 
 static char**	generate_lines(char* content) {
 	char**	lines = bsq_split(content, '\n');
 	if (lines == NULL) {
-		DEBUGERR("failed to split content: %s", content);
 		return (NULL);
 	}
 	if (!are_valid_lines(lines)) {
