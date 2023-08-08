@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_common.h                                       :+:      :+:    :+:   */
+/*   capped_buffer.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 13:29:26 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:28:22 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BSQ_COMMON_H
-#define BSQ_COMMON_H
-
-#include <stdio.h>
-#include <unistd.h>
+#ifndef CAPPED_BUFFER_H
+#define CAPPED_BUFFER_H
 #include <stdlib.h>
-#include <fcntl.h>
-#include <stdint.h>
-#include <stdbool.h>
 
-#define N_LETTER_TYPES		3
-#define BSQ_ERROR_MESSAGE	"map error\n"
+typedef struct	s_capped_buffer {
+	void*	buffer;
+	size_t	capacity;
+	size_t	used;
+}				t_capped_buffer;
+
+// capped_buffer.c
+bool		store_to_capped_buffer(t_capped_buffer* capped_buffer, const void *data, size_t data_size, size_t minimum_size);
 
 #endif

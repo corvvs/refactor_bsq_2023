@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:50:14 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ static bool	append_pointer(t_capped_buffer* splitted, char* word_start) {
 // !! 返り値配列には空文字列が含まれうる !!
 // !! 返り値配列の各要素は free-able ではない !!
 char**	bsq_split(char* str, char delimiter) {
+	// [動作イメージ]
+	// 文字列 str を先頭から見ていく.
+	// 途中で delimiter か NUL が見つかったら, そこまでを一つの単語として考え,
+	// 単語の開始位置を配列に追加する.
+	// ただし見つかったのが delimiter の場合そのままだと単語が終了しないため,
+	// delimiter を NUL で上書きする.
+
 	t_capped_buffer	splitted = {};
 	size_t			word_start = 0;
 	for (size_t i = 0; ; i += 1) {

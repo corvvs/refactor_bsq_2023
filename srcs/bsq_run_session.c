@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:21:19 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:29:21 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static t_square	find_out_bsq(const t_map* map) {
 	return (bsq);
 }
 
-// フィールドのうち求めた bsq に当たる部分を full で塗りつぶす
-static void	paint_out_bsq(t_map* map, const t_square* bsq) {
+static void	fill_out_bsq(t_map* map, const t_square* bsq) {
 	char**	field = map->field_lines;
 
 	for (size_t i = 0; i < bsq->size; i += 1) {
@@ -52,11 +51,11 @@ void	bsq_run_session(int ifd) {
 	t_map	map;
 
 	if (!bsq_generate_map(ifd, &map)) {
-		ft_putstr_fd(STDERR_FILENO, FT_ERR_MAP);
+		ft_putstr_fd(STDERR_FILENO, BSQ_ERROR_MESSAGE);
 		return ;
 	}
 	const t_square	best_square = find_out_bsq(&map);
-	paint_out_bsq(&map, &best_square);
+	fill_out_bsq(&map, &best_square);
 	print_map(&map);
 	bsq_destroy_map(&map);
 }

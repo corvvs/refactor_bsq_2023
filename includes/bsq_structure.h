@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:26:31 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 11:32:34 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #define BSQ_STRUCTURE_H
 
 #include "bsq_common.h"
-
-typedef struct	s_capped_buffer {
-	void*	buffer;
-	size_t	capacity;
-	size_t	used;
-}				t_capped_buffer;
 
 typedef struct	s_basedata {
 	char*	content;
