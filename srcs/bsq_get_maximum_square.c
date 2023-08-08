@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 11:30:31 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 15:33:41 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool		is_empty_cell(size_t row, size_t col, const t_map* map) {
 		return (false);
 	}
 	// 座標 (top, left) に物が置けることを確認
-	if (field[row][col] == map->letter.obstacle) {
+	if (field[row][col] != map->letter.empty) {
 		return (false);
 	}
 	return (true);
@@ -36,7 +36,7 @@ static bool		is_extendible_square(const t_square* square, const t_map* map) {
 	const size_t	i0 = square->top;
 	const size_t	j0 = square->left;
 
-	for (size_t k = 0; k < square->size; k += 1) {
+	for (size_t k = 0; k <= square->size; k += 1) {
 		// 右方向に1マス伸ばせるかどうか
 		if (!is_empty_cell(i0 + k, j0 + square->size, map)) {
 			return (false);
