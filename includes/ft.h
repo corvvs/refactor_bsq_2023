@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 02:41:59 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:42:53 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,20 @@
 # include "common.h"
 
 # define FT_ERR_MAP "map error\n"
+# define N_LETTERS 3
 
-typedef struct s_capped_buffer {
+typedef struct	s_capped_buffer {
 	void*	buffer;
 	size_t	capacity;
 	size_t	used;
-}	t_capped_buffer;
+}				t_capped_buffer;
 
-typedef struct s_basedata
-{
+typedef struct	s_basedata {
 	char*	content;
 	char**	lines;
-}	t_basedata;
+}				t_basedata;
 
-typedef	struct	s_map
-{
+typedef	struct	s_map {
 	t_basedata	basedata;
 	// ヘッダー行; フィールド行の行数と各種文字を定義する行
 	char*	header_line;
@@ -45,16 +44,20 @@ typedef	struct	s_map
 	size_t	num_rows;
 	// フィールド行の列数
 	size_t	num_cols;
-	// ヘッダー行で定義された empty 文字
-	char	empty;
-	// ヘッダー行で定義された obstacle 文字
-	char	obstacle;
-	// ヘッダー行で定義された full 文字
-	char	full;
+	union {
+		struct s_chars {
+			// ヘッダー行で定義された empty 文字
+			char	empty;
+			// ヘッダー行で定義された obstacle 文字
+			char	obstacle;
+			// ヘッダー行で定義された full 文字
+			char	full;
+		}		letter;
+		char	letter_array[N_LETTERS];
+	};
 }				t_map;
 
-typedef	struct	s_square
-{
+typedef	struct	s_square {
 	size_t	top;
 	size_t	left;
 	size_t	size;
@@ -75,7 +78,7 @@ bool		generate_map(int fd, t_map* map_ptr);
 void		destroy_map(t_map* map);
 
 // bsq_validator_content.c
-bool		is_nul_terminated_content(char *content);
+bool		is_nl_ended_content(char *content);
 
 // bsq_validator_lines.c
 bool		are_valid_lines(char** const lines);

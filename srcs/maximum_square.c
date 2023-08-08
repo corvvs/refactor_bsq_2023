@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:28:49 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:39:49 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool		is_empty_cell(size_t row, size_t col, const t_map* map)
 		return (false);
 	}
 	// 座標 (top, left) に物が置けることを確認
-	if (field[row][col] == map->obstacle) {
+	if (field[row][col] == map->letter.obstacle) {
 		return (false);
 	}
 	return (true);

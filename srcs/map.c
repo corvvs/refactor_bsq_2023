@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:11:48 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:39:20 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@
 static t_map	parse_map(char* content, char** lines) {
 	char*			header_line = lines[0];
 	const size_t	len = ft_strlen(header_line);
-	uint64_t num_rows;
-	bsq_str_to_u64(header_line, len - 3, &num_rows);
-	return (t_map){
-		.basedata		= { .content = content, .lines = lines },
+	uint64_t 		num_rows;
+	bsq_str_to_u64(header_line, len - N_LETTERS, &num_rows);
+
+	t_map	map = {
+		.basedata		= {
+			.content	= content,
+			.lines		= lines,
+		},
 		.header_line	= header_line,
 		.field_lines	= lines + 1,
 		.num_rows		= num_rows,
 		.num_cols		= ft_strlen(lines[1]),
-		.empty			= header_line[len - 3],
-		.obstacle		= header_line[len - 2],
-		.full			= header_line[len - 1],
 	};
+	ft_memcpy(map.letter_array, header_line + len - N_LETTERS, N_LETTERS);
+	return (map);
 }
 
 static char**	generate_lines(char* content) {

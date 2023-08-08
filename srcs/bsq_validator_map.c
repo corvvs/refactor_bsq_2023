@@ -6,20 +6,21 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 03:10:03 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/08 10:45:05 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
 // マップの各セルが empty, obstacle のいずれかであることを確認する
-static bool		are_valid_cell_griphs(const t_map *info) {
+static bool		are_valid_cell_letters(const t_map *info) {
 	char** const	field = info->field_lines;
 
 	for (size_t row = 0; row < info->num_rows; row += 1) {
 		for (size_t col = 0; col < info->num_cols; col += 1) {
-			if (field[row][col] != info->empty && field[row][col] != info->obstacle) {
-				DEBUGERR("invalid cell griph: %c at (%zu, %zu)", field[row][col], row, col);
+			char	letter = field[row][col];
+			if (letter != info->letter.empty && letter != info->letter.obstacle) {
+				DEBUGERR("invalid cell letter: %c at (%zu, %zu)", letter, row, col);
 				return (false);
 			}
 		}
@@ -47,7 +48,7 @@ static bool		is_valid_map_shape(const t_map *info) {
 
 // マップ = 入力ファイルの先頭行より後の部分についてのバリデーション
 bool		is_valid_map(const t_map *info) {
-	if (!are_valid_cell_griphs(info)) {
+	if (!are_valid_cell_letters(info)) {
 		return (false);
 	}
 	if (!is_valid_map_shape(info)) {
