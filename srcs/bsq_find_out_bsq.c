@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 12:16:41 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 23:02:18 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ static bool		is_empty_cell(size_t row, size_t col, const t_map* map) {
 
 // 与えられた正方形 square について, 左上隅を固定したまま size を1増やせるかどうかを返す
 static bool		is_extendible_square(const t_square* square, const t_map* map) {
-	const size_t	i0 = square->top;
-	const size_t	j0 = square->left;
+	const size_t	top = square->top;
+	const size_t	left = square->left;
 
+	// 右方向に1マス伸ばせることを確認する
 	for (size_t k = 0; k <= square->size; k += 1) {
-		// 右方向に1マス伸ばせるかどうか
-		if (!is_empty_cell(i0 + k, j0 + square->size, map)) {
+		if (!is_empty_cell(top + k, left + square->size, map)) {
 			return (false);
 		}
-		// 下方向に1マス伸ばせるかどうか
-		if (!is_empty_cell(i0 + square->size, j0 + k, map)) {
+	}
+
+	// 下方向に1マス伸ばせることを確認する
+	for (size_t k = 0; k <= square->size; k += 1) {
+		if (!is_empty_cell(top + square->size, left + k, map)) {
 			return (false);
 		}
 	}
@@ -60,6 +63,7 @@ static t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
 	if (!is_empty_cell(top, left, map)) {
 		return (square);
 	}
+
 	for (square.size = 0; is_extendible_square(&square, map);) {
 		square.size += 1;
 	}
@@ -67,7 +71,7 @@ static t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
 }
 
 // フィールド中に作成可能な最大の正方形(bsq; best square)を返す
-t_square	bsq_find_out_bsq(const t_map* map) {
+t_square		bsq_find_out_bsq(const t_map* map) {
 	t_square	best_square = {
 		.size = 0,
 	};
