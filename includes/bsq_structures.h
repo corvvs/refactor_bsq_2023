@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_structure.h                                    :+:      :+:    :+:   */
+/*   bsq_structures.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 19:33:15 by corvvs           ###   ########.fr       */
+/*   Created: 2023/08/09 21:17:26 by corvvs            #+#    #+#             */
+/*   Updated: 2023/08/09 21:28:01 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BSQ_STRUCTURE_H
-#define BSQ_STRUCTURE_H
+#ifndef BSQ_STRUCTURES_H
+#define BSQ_STRUCTURES_H
 
 #include "bsq_common.h"
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bsq_validators_map.c                               :+:      :+:    :+:   */
+/*   bsq_validate_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 00:53:16 by corvvs           ###   ########.fr       */
+/*   Created: 2023/08/09 21:16:55 by corvvs            #+#    #+#             */
+/*   Updated: 2023/08/09 21:16:56 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,17 @@ static bool		are_valid_cell_letters(const t_map *map) {
 }
 
 // マップ構造体の内容が正しいかどうかを確認する
-bool		is_valid_map(const t_map *map) {
+bool		bsq_validate_map(const t_map *map) {
 	// フィールドの行数がヘッダの定義と一致することを確認する
 	if (!is_expected_field_height(map)) {
 		return (false);
 	}
+
 	// フィールドの形状が想定通りの長方形であることを確認する
 	if (!is_valid_map_shape(map)) {
 		return (false);
 	}
+
 	// フィールドの各セルの文字が obstacle か empty であることを確認する
 	if (!are_valid_cell_letters(map)) {
 		return (false);

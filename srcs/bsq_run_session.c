@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 00:38:53 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 11:57:11 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,17 @@ static void	print_map(const t_map* map) {
 // 与えられた fd に対してBSQセッションを実行する
 bool	bsq_run_session(int ifd) {
 	t_map	map;
-
 	if (!bsq_generate_map(ifd, &map)) {
 		return (false);
 	}
+
 	const t_square	best_square = bsq_find_out_bsq(&map);
 	if (best_square.size == 0) {
 		DEBUGERR("%s", "no square found");
 		bsq_destroy_map(&map);
 		return (false);
 	}
+
 	fill_out_bsq(&map, &best_square);
 	print_map(&map);
 	bsq_destroy_map(&map);
