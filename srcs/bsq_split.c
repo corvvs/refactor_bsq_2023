@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 23:50:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 20:51:58 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 // splitted にアドレス word_start を追加する
 // (必要に応じて splitted を拡張する)
-static bool	append_pointer(t_elastic_buffer* splitted, char* word_start) {
-	return (store_to_elastic_buffer(splitted, &word_start, sizeof(char*), sizeof(char*) * 2));
+static bool	push_word_start(t_elastic_buffer* splitted, char* word_start) {
+	return (push_to_elastic_buffer(splitted, &word_start, sizeof(char*), sizeof(char*) * 2));
 }
 
 // str を delimiterで区切った文字列の配列を返す.
@@ -32,21 +32,28 @@ char**	bsq_split(char* str, char delimiter) {
 
 	t_elastic_buffer	splitted = {};
 	size_t				word_start = 0;
+
 	for (size_t i = 0; ; i += 1) {
+		// delimiter でも NUL でもない = 単語の途中である場合は次のループへ
 		if (str[i] != delimiter && str[i] != '\0') {
 			continue;
 		}
-		if (!append_pointer(&splitted, &str[word_start])) {
+
+		// 単語開始位置を spitted に追加する
+		if (!push_word_start(&splitted, &str[word_start])) {
 			free(splitted.buffer);
 			return (NULL);
 		}
+
+		// NUL だった場合はループ脱出, そうでない場合は次の単語の準備をする
 		if (str[i] == '\0') {
 			break;
 		}
 		str[i] = '\0';
 		word_start = i + 1;
 	}
-	if (!append_pointer(&splitted, NULL)) {
+
+	if (!push_word_start(&splitted, NULL)) {
 		free(splitted.buffer);
 		return (NULL);
 	}

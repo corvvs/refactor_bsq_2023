@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 00:51:22 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/09 20:49:24 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static char**	generate_lines(char* content) {
 	if (lines == NULL) {
 		return (NULL);
 	}
-	if (!are_valid_lines(lines)) {
+
+	if (!bsq_validate_lines(lines)) {
 		free(lines);
 		return (NULL);
 	}
@@ -51,24 +52,23 @@ static char**	generate_lines(char* content) {
 // 与えられた fd からマップ構造体を作成し, map_ptr にセットする.
 // 作成できなかった場合は false を返す.
 bool	bsq_generate_map(int fd, t_map* map_ptr) {
-	if (fd < 0) {
-		DEBUGERR("invalid fd: %d", fd);
-		return (false);
-	}
 	char*	content = bsq_read_file(fd);
 	if (content == NULL) {
 		return (false);
 	}
+
 	char**	lines = generate_lines(content);
 	if (lines == NULL) {
 		free(content);
 		return (false);
 	}
+
 	t_map	map = parse_lines_into_map(content, lines);
-	if (!is_valid_map(&map)) {
+	if (!bsq_validate_map(&map)) {
 		bsq_destroy_map(&map);
 		return (false);
 	}
+
 	*map_ptr = map;
 	return (true);
 }

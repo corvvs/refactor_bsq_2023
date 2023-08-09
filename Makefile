@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/09 00:39:36 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/09 20:54:35 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ FILES	:=	main.c\
 			bsq_run_session.c\
 			bsq_map.c\
 			bsq_read_file.c\
-			bsq_validators_content.c\
-			bsq_validators_lines.c\
-			bsq_validators_map.c\
+			bsq_validate_content.c\
+			bsq_validate_lines.c\
+			bsq_validate_map.c\
 			bsq_find_out_bsq.c\
 			bsq_split.c\
 			utils_number.c\
@@ -50,10 +50,10 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 
 .PHONY:		all clean re
 clean:
-	-rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean:		clean
-	-rm -f $(TARGET)
+	rm -f $(TARGET)
 
 re:			fclean all
 
