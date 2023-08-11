@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 23:02:18 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/10 00:34:52 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,24 @@ static t_square	get_maximum_square(size_t top, size_t left, const t_map* map) {
 	return (square);
 }
 
-// フィールド中に作成可能な最大の正方形(bsq; best square)を返す
+// フィールド中に作成可能な最大の正方形(bsq; biggest square)を返す
 t_square		bsq_find_out_bsq(const t_map* map) {
-	t_square	best_square = {
+	t_square	biggest_square = {
 		.size = 0,
 	};
 
 	for (size_t top = 0; top < map->field_height; top += 1) {
 		for (size_t left = 0; left < map->field_width; left += 1) {
 			const t_square maximum = get_maximum_square(top, left, map);
-			if (best_square.size < maximum.size) {
-				best_square = maximum;
+			if (biggest_square.size < maximum.size) {
+				biggest_square = maximum;
 			}
 		}
 	}
 
 	DEBUGOUT(
-		"best_square: (%zu, %zu), size: %zu", 
-		best_square.top, best_square.left, best_square.size
+		"biggest_square: (%zu, %zu), size: %zu", 
+		biggest_square.top, biggest_square.left, biggest_square.size
 	);
-	return (best_square);
+	return (biggest_square);
 }

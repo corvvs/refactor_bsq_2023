@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:16:50 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/09 21:16:51 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/10 01:19:24 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static bool is_printable_str(const char* str) {
 }
 
 static bool	is_unique_str(const char* str) {
+	// NOTE: ビットセットだとなお良し
 	unsigned char	mask[256] = {};
+
 	for (size_t i = 0; str[i]; i += 1) {
 		if (mask[(unsigned char)str[i]]) {
 			DEBUGERR("encountered duplicated letter: %c", str[i]);

@@ -6,14 +6,14 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/09 20:54:35 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/11 20:08:27 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror -Iincludes\
-			-g -fsanitize=address -fsanitize=undefined\
-			-D DEBUG\
+			# -g -fsanitize=address -fsanitize=undefined\
+			# -D DEBUG\
 
 SRCDIR	:=	srcs
 OBJDIR	:=	objs
