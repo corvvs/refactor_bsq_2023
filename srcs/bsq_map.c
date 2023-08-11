@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 20:49:24 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/10 00:22:55 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,5 @@ bool	bsq_generate_map(int fd, t_map* map_ptr) {
 void	bsq_destroy_map(t_map* map) {
 	free(map->basedata.content);
 	free(map->basedata.lines);
+	// NOTE: lines の各要素は解放する必要なし
 }
