@@ -6,7 +6,7 @@
 #    By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/11 20:08:27 by corvvs           ###   ########.fr        #
+#    Updated: 2023/08/12 16:32:05 by corvvs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean:		clean
-	rm -f $(TARGET)
+	rm -f $(NAME)
 
 re:			fclean all
 
