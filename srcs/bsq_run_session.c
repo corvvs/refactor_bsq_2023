@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/10 00:34:52 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/12 16:18:55 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,6 @@ bool	bsq_run_session(int ifd) {
 	}
 
 	const t_square	biggest_square = bsq_find_out_bsq(&map);
-	if (biggest_square.size == 0) {
-		DEBUGERR("%s", "no square found");
-		bsq_destroy_map(&map);
-		return (false);
-	}
-
 	fill_out_bsq(&map, &biggest_square);
 	print_map(&map);
 	bsq_destroy_map(&map);
