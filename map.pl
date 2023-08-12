@@ -5,9 +5,9 @@ die "program x y density" unless (scalar(@ARGV) == 3);
 
 my ($x, $y, $density) = @ARGV;
 
-my $char_empty     = "|";
-my $char_obstacle  = " ";
-my $char_full      = "~";
+my $char_empty     = ".";
+my $char_obstacle  = "o";
+my $char_full      = "x";
 
 print "$y$char_empty$char_obstacle$char_full\n";
 for (my $i = 0; $i < $y; $i++) {

@@ -6,14 +6,27 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/10 00:22:55 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/12 16:31:10 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-// 入力行をパースして, t_map 構造体を生成する
-static t_map	parse_lines_into_map(char* content, char** lines) {
+static char**	generate_lines(char* content) {
+	char**	lines = bsq_split(content, '\n');
+	if (lines == NULL) {
+		return (NULL);
+	}
+
+	if (!bsq_validate_lines(lines)) {
+		free(lines);
+		return (NULL);
+	}
+	return (lines);
+}
+
+// t_map 構造体を生成する
+static t_map	generate_map(char* content, char** lines) {
 	const char*		header_line = lines[0];
 	const size_t	rows_len = ft_strlen(header_line) - N_LETTER_TYPES;
 	// ASSUMPTION: header_line の長さが N_LETTER_TYPES より大きいこと
@@ -36,19 +49,6 @@ static t_map	parse_lines_into_map(char* content, char** lines) {
 	return (map);
 }
 
-static char**	generate_lines(char* content) {
-	char**	lines = bsq_split(content, '\n');
-	if (lines == NULL) {
-		return (NULL);
-	}
-
-	if (!bsq_validate_lines(lines)) {
-		free(lines);
-		return (NULL);
-	}
-	return (lines);
-}
-
 // 与えられた fd からマップ構造体を作成し, map_ptr にセットする.
 // 作成できなかった場合は false を返す.
 bool	bsq_generate_map(int fd, t_map* map_ptr) {
@@ -63,7 +63,7 @@ bool	bsq_generate_map(int fd, t_map* map_ptr) {
 		return (false);
 	}
 
-	t_map	map = parse_lines_into_map(content, lines);
+	t_map	map = generate_map(content, lines);
 	if (!bsq_validate_map(&map)) {
 		bsq_destroy_map(&map);
 		return (false);
