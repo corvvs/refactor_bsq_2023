@@ -6,7 +6,7 @@
 /*   By: corvvs <corvvs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:17:26 by corvvs            #+#    #+#             */
-/*   Updated: 2023/08/09 21:28:01 by corvvs           ###   ########.fr       */
+/*   Updated: 2023/08/12 16:28:04 by corvvs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct	s_basedata {
 }				t_basedata;
 
 typedef struct	s_map {
+	// マップの元になるデータ
 	t_basedata	basedata;
 	// フィールド行; 一番上の行(ヘッダー行)以降の行
 	char**		field_lines;
@@ -43,6 +44,7 @@ typedef struct	s_map {
 	};
 }				t_map;
 
+// マップ上の正方形
 typedef struct	s_square {
 	size_t	top;
 	size_t	left;
